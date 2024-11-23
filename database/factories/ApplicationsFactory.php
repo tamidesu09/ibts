@@ -74,7 +74,7 @@ class ApplicationsFactory extends Factory
             'cv_path' => $this->faker->filePath,
             'user_id' => $user->id,
             'job_id' => $job->id,
-            'is_parsed' => fake()->randomElement($array = array(0, 1)),
+            'is_parsed' => fake()->randomElement($array = array(1)),
             'status' => fake()->randomElement($array = array('Application Received', 'Screen', 'Under Review', 'Interview Schedule', 'Offer')),
             'skills' => json_encode($selectedSkills)
         ];

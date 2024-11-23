@@ -78,7 +78,7 @@
                                 <td>{{ $activity->date }}</td>
                                 <td>{{ $activity->hours_start }} - {{ $activity->hours_end }}</td>
                                 <td>{{ $activity->location}}</td>
-                                <td>{{ $activity->attendee}}</td>
+                                <td>{{ $activity->user->name}}</td>
                                 <td>{!! $activity->description !!}</td>
                                 <td>{{ $activity->url}}</td>
                                 <td class="text-center">

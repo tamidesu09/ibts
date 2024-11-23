@@ -94,15 +94,13 @@ class AdminController extends Controller
             ->groupBy('type')
             ->get();
 
-
-
         $jobApplications = DB::table('applications')
             // Join with users table to get user information
             ->join('users', 'applications.user_id', '=', 'users.id')
             // Join with the jobs table to get the job name based on job_id
             ->join('jobs', 'applications.job_id', '=', 'jobs.id')
-            // Select job_id, job_name, user_id, user name, and skills
-            ->select('applications.job_id', 'jobs.title as job_name', 'users.name as user_name', 'applications.skills', DB::raw('JSON_LENGTH(applications.skills) as skill_count'))
+            // Select job_id, job_name, user_id, user name, skills, and application id
+            ->select('applications.id as application_id', 'applications.job_id', 'jobs.title as job_name', 'users.name as user_name', 'applications.skills', DB::raw('JSON_LENGTH(applications.skills) as skill_count'))
             // Group by job_id and user_id to get individual users' skills
             ->get();
 
@@ -120,18 +118,24 @@ class AdminController extends Controller
             // Collect applications for each job
             $users = $jobApplications->where('job_id', $job->job_id);
 
+            // Sort the users by skill count in descending order
+            $sortedUsers = $users->sortByDesc('skill_count');
+
             // Structure the data for each job
             $results[$job->job_id] = [
                 'job_name' => $job->job_name, // Now includes actual job name
                 'applications' => $job->application_count,
-                'users' => $users->map(function ($user) {
+                'users' => $sortedUsers->map(function ($user) {
                     return [
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
+                        'application_id' => $user->application_id, // Include the application ID here
                     ];
                 })->toArray(),
             ];
         }
+
+
 
 
         return view('admin.index', compact([

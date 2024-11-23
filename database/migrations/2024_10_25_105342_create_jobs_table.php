@@ -20,6 +20,7 @@ return new class extends Migration
             $table->time('hours_end');
             $table->softDeletes();
             $table->timestamps();
+            $table->json('requirements')->nullable();
         });
     }
 

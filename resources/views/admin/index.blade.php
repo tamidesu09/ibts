@@ -15,7 +15,7 @@
                 <h3 class="card-title">{{ $jobData['job_name'] }} ({{ $jobData['applications'] }} applications)</h3>
 
                 @foreach ($jobData['users'] as $user)
-                <a href="">{{ $user['name'] }} - Skills Count: {{ $user['skill_count'] }} </a> <br>
+                <a href="{{route('candidates.show', $user['application_id'])}}">{{ $user['name'] }} - Skills Count: {{ $user['skill_count'] }} </a> <br>
                 @endforeach
             </div>
         </div>
