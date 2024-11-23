@@ -102,8 +102,10 @@
 
     <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     <div class="page">
-        @auth()
-            @include('layouts.sidebar')
+        @auth
+        @if(auth()->user()->user_type == 0)
+        @include('layouts.sidebar')
+        @endif
         @endauth
 
         <div class="page-wrapper">

@@ -69,6 +69,10 @@ Route::get('/feedbacks', function () {
     return view('feedback.index'); // candi_info.blade.php
 })->name('feedback.index');
 
+Route::get('/status', function () {
+    return view('status'); // candi_info.blade.php
+})->name('status');
+
 Route::get('jobs', [JobController::class, 'index'])->middleware(['auth', 'verified'])->name('jobs.index');
 Route::get('jobs/create', [JobController::class, 'create'])->middleware(['auth', 'verified'])->name('jobs.create');
 Route::post('jobs/store', [JobController::class, 'store'])->middleware(['auth', 'verified'])->name('jobs.store');

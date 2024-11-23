@@ -119,15 +119,16 @@
 
     <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     <div class="page">
-        @if(auth()->user()->user_type == 0)
+
+        @if(auth()->check() && auth()->user()->user_type == 0)
         @include('layouts.sidebar')
         @endif
 
-
-        @if(auth()->user()->user_type != 0)
-
+        @if(!auth()->check() || auth()->user()->user_type == 1)
         @include('layouts.top-navigation')
         @endif
+
+
 
 
 
@@ -161,7 +162,7 @@
     <script src="{{ asset('js/demo.min.js') }}"></script>
     @yield('scripts')
 
-    @if(auth()->user()->user_type != 0)
+    @if(!auth()->check() || auth()->user()->user_type == 1)
     @include('layouts.footer')
     @endif
 </body>
