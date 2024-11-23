@@ -16,12 +16,7 @@ class FeedbackController extends Controller
         'message' => 'required|string',
     ]);
 
-    Feedback::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'message' => $request->message,
-    ]);
+    Feedback::create($request->validated());
 
     // Set success message
     return redirect()->back()->with('success', 'Your feedback has been submitted successfully!');

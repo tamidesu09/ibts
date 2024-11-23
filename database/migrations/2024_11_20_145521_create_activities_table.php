@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('attendee');
             $table->text('description');
-            $table->foreign('application_id')->references('id')->on('applications')->onDelete('cascade');
+            $table->foreignId('application_id')->constrained();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->date('dob');
+            $table->smallInteger('user_type')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

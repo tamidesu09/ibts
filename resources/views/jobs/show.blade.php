@@ -8,7 +8,11 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <div class="page-pretitle">Jobs</div>
+                    @if(auth()->user()->user_type == 1)
                     <h2 class="page-title">Apply Job</h2>
+                    @elseif(auth()->user()->user_type != 1)
+                    <h2 class="page-title">Job Information</h2>
+                    @endif
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <a href="{{ route('jobs.index') }}" class="btn btn-primary">
@@ -69,6 +73,7 @@
                     </div>
                 </div>
 
+                @if(auth()->user()->user_type == 1)
                 <!-- Application Form -->
                 <div class="col-sm-6">
                     <div class="card">
@@ -109,10 +114,10 @@
                                 <div class="mb-3">
                                     <label class="form-label">Phone Number <span
                                             class="text-danger fw-bold">*</span></label>
-                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror"
-                                        name="phone" value="{{ old('phone') }}" placeholder="+639-111-111-111"
+                                    <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
+                                        name="phone_number" value="{{ old('phone_number') }}" placeholder="+639-111-111-111"
                                         required />
-                                    @error('phone')
+                                    @error('phone_number')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -165,6 +170,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

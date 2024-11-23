@@ -2,7 +2,8 @@
 
 @section('content')
 
-        <title>Home</title>
+<title>Home</title>
+
 
 
 <!-- Hero Section -->
@@ -45,8 +46,8 @@
           <img src="{{ asset('img/serv2.png') }}" class="card-img-top" alt="Design and System" />
           <div class="card-body">
             <h5 class="card-title fw-bold">Design and System Integration</h5>
-            <p class="card-text">From concept to realization of your desired business hub. 
-</p>
+            <p class="card-text">From concept to realization of your desired business hub.
+            </p>
           </div>
         </div>
       </div>
@@ -56,7 +57,7 @@
           <div class="card-body">
             <h5 class="card-title fw-bold">Information & Communication Technology</h5>
             <p class="card-text">CCTV , SERVER/STORAGE, ATM FLM , NETWORK AND RFID TECHNOLOGY.
-</p>
+            </p>
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@
           <div class="card-body">
             <h5 class="card-title fw-bold">Technical Support</h5>
             <p class="card-text">Let our expertise do the job for your after-sales/preventive maintenance NATIONWIDE
-</p>
+            </p>
           </div>
         </div>
       </div>
@@ -81,7 +82,8 @@
     height: 100vh;
     position: relative;
     padding-top: 0;
-    margin-top: 0; /* Adjust to remove space from the navbar */
+    margin-top: 0;
+    /* Adjust to remove space from the navbar */
   }
 
   .hero-section::before {
@@ -91,7 +93,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9); /* Adds a dark overlay to improve text readability */
+    background: rgba(0, 0, 0, 0.9);
+    /* Adds a dark overlay to improve text readability */
   }
 
   .hero-section .container {
@@ -109,13 +112,18 @@
   }
 
   .navbar {
-    z-index: 1000; /* Ensure navbar is always above the hero section */
+    z-index: 1000;
+    /* Ensure navbar is always above the hero section */
   }
 
-  body, html {
+  body,
+  html {
     margin: 0;
     padding: 0;
   }
 </style>
+
+
+
 
 @endsection
