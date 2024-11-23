@@ -44,7 +44,7 @@ Route::get('/services', function () {
 
 Route::get('/careers', function () {
     $jobs = Job::all();
-        return view('careers', compact('jobs')); // careers.blade.php
+    return view('careers', compact('jobs')); // careers.blade.php
 })->name('careers');
 
 
@@ -68,19 +68,6 @@ Route::get('/candi_info', function () {
 Route::get('/feedbacks', function () {
     return view('feedback.index'); // candi_info.blade.php
 })->name('feedback.index');
-
-Route::get('/activity', function () {
-    return view('activity.index'); // candi_info.blade.php
-})->name('activity.index');
-
-Route::get('/activity/create', function () {
-    return view('activity.create'); // candi_info.blade.php
-})->name('activity.create');
-
-Route::get('/status', function () {
-    return view('status'); // candi_info.blade.php
-})->name('status');
-// to remove
 
 Route::get('jobs', [JobController::class, 'index'])->middleware(['auth', 'verified'])->name('jobs.index');
 Route::get('jobs/create', [JobController::class, 'create'])->middleware(['auth', 'verified'])->name('jobs.create');
@@ -113,21 +100,10 @@ Route::get('/feedbacks', [FeedbackController::class, 'index'])->middleware(['aut
 Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback.delete');
 
 Route::resource('notes', NotesController::class);
-// Route::post('/notes/store', [NotesController::class, 'store'])->middleware(['auth', 'verified'])->name('notes.store');
 
-// Route::get('/candidate/{id}', [NotesController::class, 'show'])->name('notes.show');
-
-
-
-
-// Route::get('/candidates/show', [NotesController::class, 'index'])->name('candidates.show');
-
-// Route::post('/notes/store', [NotesController::class, 'store']);
-
-// Route::get('/candidates/{id}/', [NotesController::class, 'show'])->name('notes.show');
 
 Route::get('/candidate/{applicationId}', [NotesController::class, 'show'])->name('candidate.show');
 
-// Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');
-// Route::get('/activity/create', [ActivityController::class, 'create'])->name('activity.create');
-// Route::post('/activity/store', [ActivityController::class, 'store'])->name('activity.store');
+Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
+Route::post('/activities/store', [ActivityController::class, 'store'])->name('activities.store');

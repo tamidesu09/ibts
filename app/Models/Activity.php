@@ -18,11 +18,6 @@ class Activity extends Model
         'location',
         'attendee',
         'description',
-        'application_id',
+        'url'
     ];
-
-    public function application()
-    {
-        return $this->belongsTo(Application::class, 'application_id');
-    }
 }

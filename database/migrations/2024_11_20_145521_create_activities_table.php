@@ -15,10 +15,10 @@ return new class extends Migration
             $table->date('date');
             $table->time('hours_start');
             $table->time('hours_end');
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->string('attendee');
             $table->text('description');
-            $table->foreignId('application_id')->constrained();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"\ />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" \ />
     <link rel="stylesheet" href="{{ asset('css/tabler.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/demo.min.css') }}">
     <link
@@ -119,9 +119,17 @@
 
     <script src="{{ asset('js/demo-theme.min.js') }}"></script>
     <div class="page">
-        @auth()
-        @endauth
+        @if(auth()->user()->user_type == 0)
+        @include('layouts.sidebar')
+        @endif
+
+
+        @if(auth()->user()->user_type != 0)
+
         @include('layouts.top-navigation')
+        @endif
+
+
 
         <div class="page-wrapper">
             <div class="">
@@ -152,7 +160,10 @@
     <script src="{{ asset('js/tabler.min.js') }}"></script>
     <script src="{{ asset('js/demo.min.js') }}"></script>
     @yield('scripts')
+
+    @if(auth()->user()->user_type != 0)
     @include('layouts.footer')
+    @endif
 </body>
 
 </html>
