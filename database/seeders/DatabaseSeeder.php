@@ -22,9 +22,11 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory(100)->create();
         \App\Models\Job::factory(50)->create();
-        \App\Models\Applications::factory(50)->create();
+        \App\Models\Applications::factory(500)->create();
         \App\Models\Feedback::factory(50)->create();
         \App\Models\Notes::factory(50)->create();
+        \App\Models\Activity::factory(50)->create();
+
 
 
     }
