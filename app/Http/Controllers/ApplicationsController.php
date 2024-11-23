@@ -13,6 +13,9 @@ class ApplicationsController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->user_type != 0) {
+            abort(404);
+        }
         $applications = Applications::all();
         $applicationsCount = Applications::count(); // Get total number of applications
         return view('candidate.index', compact('applications', 'applicationsCount'));
@@ -25,47 +28,45 @@ class ApplicationsController extends Controller
 
     public function store(ApplicationsCreateRequest $request)
     {
-        // Handle the CV upload
-        if ($request->hasFile('cv')) {
+        if (auth()->user()->user_type == 1) {
 
-            $cv = $request->file('cv'); // Define the $cv variable here
-            // Define the path where the file should be stored
-            $cvPath = 'cvs/' . $cv->getClientOriginalName(); // This creates a path like 'cvs/filename.pdf'
+            if ($request->hasFile('cv')) {
 
-            // Move the file to the public/cvs directory
-            $cv->move(public_path('cvs'), $cv->getClientOriginalName());
+                $cv = $request->file('cv');
 
-            $data = $request->validated();
-            $data['cv_path'] = $cvPath; // Add cv_path to the data array
+                $cvPath = 'cvs/' . md5(now()) . '_' . $cv->getClientOriginalName();
 
-            if ($request->has('job_id')) {
-                $data['job_id'] = $request->input('job_id'); // Include job_id from the request
+                $cv->move(public_path('cvs'), $cv->getClientOriginalName());
+
+                Applications::create([
+                    'job_id' => $request->job_id,
+                    'complete_name' => auth()->user()->name,
+                    'email' => auth()->user()->email,
+                    'cv_path' => $cvPath,
+                    'phone_number' => $request->phone_number,
+                    'sex' => $request->sex
+                ]);
+
+                return back()
+                    ->with('success', 'Application submitted successfully.');
             } else {
-                return back()->withErrors(['job_id' => 'Job ID is required']);
+                return back()->withErrors(['cv' => 'CV is required']);
             }
-
-            // Create the application
-            Applications::create($data);
-
-            // Redirect to the job show route with job_id
-            return redirect()->route('jobs.show', ['job_id' => $data['job_id']])
-                ->with('success', 'Application submitted successfully.');
-        } else {
-            return back()->withErrors(['cv' => 'CV is required']);
         }
     }
 
 
     public function show($candidate_id)
     {
+        if (auth()->user()->user_type != 0) {
+            abort(404);
+        }
         // Find the application and eager load the related job information
         $application = Applications::with('job')->findOrFail($candidate_id);
 
         // Pass the application to the view
         return view('candidate.show', compact('application'));
     }
-
-
 
     public function edit($application_id)
     {
@@ -84,6 +85,9 @@ class ApplicationsController extends Controller
 
     public function destroy($application_id)
     {
+        if (auth()->user()->user_type != 0) {
+            abort(404);
+        }
         $application = Applications::findOrFail($application_id);
         $application->delete();
 

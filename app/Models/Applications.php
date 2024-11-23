@@ -19,16 +19,15 @@ class Applications extends Model
     ];
 
 
-// In Application.php model
-public function job()
-{
-    return $this->belongsTo(Job::class); 
-}
+    // In Application.php model
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 
-// Define the relationship with Activity
+    // Define the relationship with Activity
     public function activities()
     {
         return $this->hasMany(Activity::class, 'application_id');
     }
-
 }

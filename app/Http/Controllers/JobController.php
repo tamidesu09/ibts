@@ -25,7 +25,7 @@ class JobController extends Controller
 
     public function store(JobsCreateRequest $request)
     {
-        if (auth()->user()->user_type != 1) {
+        if (auth()->user()->user_type != 0) {
             abort(404);
         }
         $validatedData = $request->validated();

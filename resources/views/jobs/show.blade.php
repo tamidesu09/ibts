@@ -66,7 +66,7 @@
                             <h1 class="card-title fw-bold">{{ $job->title }}</h1>
                         </div>
                         <div class="card-body">
-                            <p>{{!! $job->description !!}}</p>
+                            <p>{!! $job->description !!}</p>
                             <p>{{ $job->type }}</p>
                             <p>{{ $job->hours_start }} - {{ $job->hours_end }}</p>
                         </div>
@@ -89,11 +89,10 @@
 
                                 <!-- Name Field -->
                                 <div class="mb-3 mt-5">
-                                    <label class="form-label">Complete Name <span
-                                            class="text-danger fw-bold">*</span></label>
+                                    <label class="form-label">Complete Name </label>
                                     <input type="text" class="form-control @error('complete_name') is-invalid @enderror"
-                                        name="complete_name" value="{{ old('complete_name') }}" placeholder="FN, MI, S"
-                                        required />
+                                        name="complete_name" value="{{ auth()->user()->name  }}" placeholder="FN, MI, S"
+                                        required disabled />
                                     @error('complete_name')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -101,10 +100,10 @@
 
                                 <!-- Email Field -->
                                 <div class="mb-3">
-                                    <label class="form-label">Email <span class="text-danger fw-bold">*</span></label>
+                                    <label class="form-label">Email </label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" placeholder="Your email address."
-                                        required />
+                                        name="email" value="{{ auth()->user()->email }}" placeholder="Your email address."
+                                        required disabled/>
                                     @error('email')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
