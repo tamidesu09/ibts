@@ -8,6 +8,8 @@ use App\Models\Applications;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdminController;
+
 
 
 /*
@@ -23,7 +25,8 @@ use App\Http\Controllers\ActivityController;
 
 // Home Route
 Route::view('/', 'home')->name('home');
-Route::view('/admin', 'admin.index')->name('index');
+Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
 
 // Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
