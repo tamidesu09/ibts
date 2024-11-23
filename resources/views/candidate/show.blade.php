@@ -265,8 +265,9 @@
                     <!-- Additional Tab Contents (Resume, Notes, History) -->
                     <div class="tab-pane" id="tabs-resume">
 
+                        @if($application->is_parsed === 0)
                         <button id="parse-resume" class="btn btn-dark mb-3">Parse Resume</button>
-
+                        @endif
                         <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 100vh">
                         </iframe>
                     </div>
@@ -533,9 +534,10 @@
         });
 
         async function saveResume(response) {
+
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            const skill_list = JSON.stringify(response.data.skills);
+            const skill_list = response.data.skills;
             const education_list = JSON.stringify(response.data.education);
             const experience_list = JSON.stringify(response.data.experience);
 
@@ -553,7 +555,7 @@
                     }
                 });
 
-                console.log(response);
+                location.reload();
 
             } catch (error) {
                 console.error("Error:", error);

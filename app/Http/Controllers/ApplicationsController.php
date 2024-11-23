@@ -116,16 +116,20 @@ class ApplicationsController extends Controller
 
     public function parseResume(Request $request)
     {
+        if (auth()->user()->user_type != 0) {
+            abort(404);
+        }
+
         $application = Applications::findOrFail($request->application_id);
 
-        return response()->json($request->skills);
+        if ($application->is_parsed === 0) {
+            $application->skills = $request->skills;
+            $application->educations = $request->educations;
+            $application->experiences =  $request->experiences;
+            $application->is_parsed = true;
+            $application->save();
+        }
 
-
-        $application->skills = $request->skills;
-        $application->educations = $request->educations;
-        $application->experiences =  $request->experiences;
-
-
-        $application->save();
+        return response()->json($application);
     }
 }

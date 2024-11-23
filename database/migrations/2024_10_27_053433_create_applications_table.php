@@ -17,6 +17,10 @@ class CreateApplicationsTable extends Migration
             $table->string('cv_path');        // Attach Your CV (Path to stored file)
             $table->string('status')->default('Application Received');
             $table->timestamps();             // created_at and updated_at
+            $table->json('skills')->nullable();
+            $table->json('educations')->nullable();
+            $table->json('experiences')->nullable();
+            $table->boolean('is_parsed')->default(false);
         });
     }
 
