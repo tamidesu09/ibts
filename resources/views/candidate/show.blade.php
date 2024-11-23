@@ -48,7 +48,23 @@
                         </svg>
                     </span>
                     <h4 class="text-muted mb-0">{{ $application->email }}</h4>
+
+
                 </div>
+
+                <div class="d-flex align-items-center mt-2">
+                    <span class="me-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-mail">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+                            <path d="M3 7l9 6l9 -6" />
+                        </svg>
+                    </span>
+                    <h4 class="text-muted mb-0">{{ $application->job->title }}</h4>
+
+
+                </div>
+
             </div>
         </div>
 
@@ -97,19 +113,19 @@
                                                     <td>Candidate Full Name</td>
                                                     <td class="text-secondary">{{ $application->complete_name }}</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Candidate First Name</td>
                                                     <td class="text-secondary">{{ $application->first_name }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Candidate Last Name</td>
                                                     <td class="text-secondary">{{ $application->last_name }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Sex</td>
                                                     <td class="text-secondary">{{ $application->sex }}</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Diploma</td>
                                                     <td class="text-secondary">{{ $application->diploma }}</td>
                                                 </tr>
@@ -137,7 +153,7 @@
                                                 <tr>
                                                     <td>Candidate Address</td>
                                                     <td class="text-secondary">{{ $application->address }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Candidate Email Address</td>
                                                     <td class="text-secondary"><span
@@ -146,7 +162,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Candidate Phone</td>
-                                                    <td class="text-secondary">{{ $application->phone }}</td>
+                                                    <td class="text-secondary">{{ $application->phone_number }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -179,6 +195,7 @@
                             <!-- Right Side: Skills, Additional Information, and Experience -->
                             <div class="col-sm-6 mt-3 mt-sm-0">
                                 <!-- Skills Card -->
+                                @if($application->is_parsed === 1)
                                 <div class="card">
                                     <div class="card-header bg-dark">
                                         <h3 class="card-title text-light">Skills</h3>
@@ -186,78 +203,79 @@
                                     <div class="card-body">
                                         <ul class="list-unstyled">
                                             <li class="d-flex align-items-center">
-                                                <span class="badge badge-pill bg-green-lt">10 sample</span>
-                                                {{-- sample will be replaced by the actual retrieval from resume parsing --}}
+                                                @foreach(json_decode($application->skills) as $skill)
+                                                <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
+                                                @endforeach
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
+                                @endif
 
+                                @if($application->is_parsed === 1)
                                 <!-- Additional Information Card -->
                                 <div class="card mt-3">
                                     <div class="card-header bg-dark">
-                                        <h3 class="card-title text-light">Additional Information</h3>
+                                        <h3 class="card-title text-light">Education Background</h3>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-vcenter">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Candidate Industry</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Years of Experience</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Graduation Date</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Current Salary</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Expected Salary</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nationality</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Language</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="card-body">
+
+                                        @foreach(json_decode($application->educations) as $education)
+                                        <div>
+                                            <h4>{{ $education->name }}</h4>
+                                            <p>{{ implode(', ', $education->dates) }}</p>
+                                        </div>
+                                        @unless($loop->last) <!-- Check if it's not the last item -->
+                                        <hr>
+                                        @endunless
+                                        @endforeach
                                     </div>
                                 </div>
+                                @endif
 
+                                @if($application->is_parsed === 1)
                                 <!-- Experience Card -->
                                 <div class="card mt-3">
                                     <div class="card-header bg-dark">
                                         <h3 class="card-title text-light">Experience</h3>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-vcenter">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Previous Companies</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Roles Held</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Key Achievements</td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="card-body">
+
+
+                                        @foreach(json_decode($application->experiences) as $experience)
+                                        <div>
+                                            <h4>{{ $experience->title }}</h4>
+                                            <p>{{ implode(', ', $experience->dates) }}</p>
+                                            <p><strong>Location:</strong> {{ $experience->location }}</p>
+                                            <p><strong>Organization:</strong> {{ $experience->organization }}</p>
+                                        </div>
+                                        @unless($loop->last) <!-- Check if it's not the last item -->
+                                        <hr>
+                                        @endunless
+                                        @endforeach
                                     </div>
+
                                 </div>
+                                @endif
+
+                                @if($application->is_parsed === 0)
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="large-icon text-muted mt-2" width="40" height="40">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path d="M14.5 16.05a3.5 3.5 0 0 0 -5 0" />
+                                        <path d="M8 9l2 2" />
+                                        <path d="M10 9l-2 2" />
+                                        <path d="M14 9l2 2" />
+                                        <path d="M16 9l-2 2" />
+                                    </svg>
+                                    <p class="text-muted mt-2">Candidate's resume is not parsed yet</p>
+                                </div>
+                                @endif
+
+
                             </div>
                         </div>
                     </div>
@@ -538,8 +556,8 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             const skill_list = response.data.skills;
-            const education_list = JSON.stringify(response.data.education);
-            const experience_list = JSON.stringify(response.data.experience);
+            const education_list = response.data.education;
+            const experience_list = response.data.experience;
 
             console.log(skill_list, education_list, experience_list);
 
