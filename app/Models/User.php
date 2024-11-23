@@ -25,6 +25,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'dob'
     ];
 
+    public function applications()
+    {
+        return $this->hasMany(Applications::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

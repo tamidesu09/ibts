@@ -51,7 +51,7 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <a href="{{ route('status') }}" class="dropdown-item">Status</a>
+              <a href="{{ route('applicants.getJobApplications') }}" class="dropdown-item">My Job Applications</a>
               <a href="{{ route('profile.edit') }}" class="dropdown-item">Profile</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

@@ -15,7 +15,7 @@
         <div class="row">
             <h1 class="mt-5">JOB <span style="color: #163673">OPENINGS</span></h1>
 
-            <div class="container mt-5">
+            <div class="container">
                 <div class="row mb-5 mt-5">
                     <div class="col-12">
                         <div class="card-body p-3">

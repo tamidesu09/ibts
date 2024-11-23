@@ -149,16 +149,18 @@
 
                     <div class="mb-3">
                         <label class="form-label">Attendee</label>
-                        <input list="attendees-list" id="attendee" class="form-control @error('attendee') is-invalid @enderror"
-                            name="attendee"
+                        <input list="attendees-list" id="user_id_input" class="form-control @error('user_id') is-invalid @enderror"
+                            name="user_id"
                             placeholder=" Search candidate or email address" />
 
                         <datalist id="attendees-list">
                             @foreach($attendees as $attendee)
-                            <option> {{$attendee->complete_name}}</option>
+                            <option value="{{ $attendee->complete_name }}" data-id="{{ $attendee->user_id }}"></option>
                             @endforeach
                         </datalist>
-                        @error('attendee')
+
+                        <input type="hidden" id="user_id" name="user_id"> <!-- Hidden input to store user_id -->
+                        @error('user_id')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -206,6 +208,22 @@
             options.content_css = 'dark';
         }
         tinyMCE.init(options);
+    });
+</script>
+
+<script>
+    document.getElementById('user_id_input').addEventListener('input', function() {
+        const input = this;
+        const datalist = document.getElementById('attendees-list');
+        const options = datalist.options;
+
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === input.value) {
+                // Set the hidden input with the corresponding user_id
+                document.getElementById('user_id').value = options[i].dataset.id;
+                break;
+            }
+        }
     });
 </script>
 

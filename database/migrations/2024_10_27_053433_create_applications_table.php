@@ -21,6 +21,7 @@ class CreateApplicationsTable extends Migration
             $table->json('educations')->nullable();
             $table->json('experiences')->nullable();
             $table->boolean('is_parsed')->default(false);
+            $table->foreignId('user_id')->constrained();
         });
     }
 

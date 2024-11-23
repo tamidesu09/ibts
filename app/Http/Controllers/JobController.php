@@ -6,6 +6,8 @@ use App\Http\Requests\JobsCreateRequest;
 use App\Http\Requests\JobsUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\User;
+
 
 class JobController extends Controller
 {
@@ -35,8 +37,11 @@ class JobController extends Controller
 
     public function show($job_id)
     {
+        $user = User::findOrFail(auth()->user()->id);
         $job = Job::findOrFail($job_id);
-        return view('jobs.show', compact('job'));
+        $hasApplied = $user->applications()->where('job_id', $job->id)->exists();
+  
+        return view('jobs.show', compact('job','hasApplied'));
     }
 
     public function edit($job_id)

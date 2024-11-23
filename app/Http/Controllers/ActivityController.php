@@ -24,7 +24,7 @@ class ActivityController extends Controller
             abort(404);
         }
 
-        $attendees = Applications::select('complete_name', 'email')
+        $attendees = Applications::select('complete_name', 'email', 'user_id')
             ->distinct()
             ->get();
 

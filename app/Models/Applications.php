@@ -15,7 +15,8 @@ class Applications extends Model
         'phone_number',  // Phone Number
         'sex',           // Sex (Optional)
         'cv_path',       // Attach Your CV (Path to stored file)
-        'job_id'         // Job ID foreign key
+        'job_id',         // Job ID foreign key
+        'user_id'
     ];
 
 
@@ -23,6 +24,11 @@ class Applications extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     // Define the relationship with Activity

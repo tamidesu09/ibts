@@ -6,6 +6,7 @@ use App\Http\Requests\ApplicationsCreateRequest;
 use App\Http\Requests\ApplicationsUpdateRequest;
 use App\Models\Applications;
 use App\Models\Notes;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -45,7 +46,8 @@ class ApplicationsController extends Controller
                     'email' => auth()->user()->email,
                     'cv_path' => $cvPath,
                     'phone_number' => $request->phone_number,
-                    'sex' => $request->sex
+                    'sex' => $request->sex,
+                    'user_id' => auth()->user()->id
                 ]);
 
                 return back()
@@ -131,5 +133,18 @@ class ApplicationsController extends Controller
         }
 
         return response()->json($application);
+    }
+
+    public function getJobApplications()
+    {
+        if (auth()->user()->user_type != 1) {
+            abort(404);
+        }
+
+        $user = User::findOrFail(auth()->user()->id);
+        $job_applications = $user->applications()->get();
+        $activities = $user->activities()->get();
+
+        return view('status', compact('job_applications', 'activities'));
     }
 }

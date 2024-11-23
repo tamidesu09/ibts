@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'title',
@@ -16,8 +16,13 @@ class Activity extends Model
         'hours_start',
         'hours_end',
         'location',
-        'attendee',
         'description',
-        'url'
+        'url',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

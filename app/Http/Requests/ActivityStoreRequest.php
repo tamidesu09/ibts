@@ -28,9 +28,9 @@ class ActivityStoreRequest extends FormRequest
             'hours_start' => 'required',
             'hours_end' => 'required',
             'location' => 'nullable|string|max:255',
-            'attendee' => 'required|string',
             'description' => 'required|string|max:500',
-            'url' => 'nullable|max:255'
+            'url' => 'nullable|max:255',
+            'user_id' => 'required|exists:users,id'
         ];
     }
 }

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->time('hours_start');
             $table->time('hours_end');
             $table->string('location')->nullable();
-            $table->string('attendee');
             $table->text('description');
             $table->text('url')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

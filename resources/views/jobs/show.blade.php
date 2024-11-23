@@ -96,9 +96,17 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
+
+                        @if($hasApplied === false)
                         <h1 class="text-primary fw-bold">Join our team today!</h1>
                         <h4>Send us your <span class="text-primary">CV</span>.</h4>
+                        @else
+                        <h3 class="text-success fw-bold">You have already applied for this job.</h3>
+                        <a class="btn btn-success" href="{{route('applicants.getJobApplications')}}"> View your application.</a></p>
+                        @endif
 
+
+                        @if($hasApplied === false)
                         <form action="{{ route('applications.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
@@ -184,6 +192,8 @@
 
                             <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
                         </form>
+                        @endif
+
                     </div>
                 </div>
             </div>
