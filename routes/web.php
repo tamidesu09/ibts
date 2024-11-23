@@ -103,6 +103,7 @@ Route::get('candidates', [ApplicationsController::class, 'index'])->middleware([
 Route::resource('candidate', ApplicationsController::class);
 
 Route::get('candidates/{id}', [ApplicationsController::class, 'show'])->name('candidates.show');
+Route::post('update_status/{application_id}', [ApplicationsController::class, 'updateStatus'])->name('candidates.updateStatus');
 
 // Feedback - Contact Us - Client Side
 Route::post('/feedback/store', [FeedbackController::class, 'store'])->middleware(['auth', 'verified'])->name('feedback.store');

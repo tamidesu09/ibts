@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApplicationsCreateRequest;
 use App\Http\Requests\ApplicationsUpdateRequest;
 use App\Models\Applications;
+use App\Models\Notes;
 use Illuminate\Http\Request;
 
 
@@ -36,7 +37,7 @@ class ApplicationsController extends Controller
 
                 $cvPath = 'cvs/' . md5(now()) . '_' . $cv->getClientOriginalName();
 
-                $cv->move(public_path('cvs'), $cv->getClientOriginalName());
+                $cv->move(public_path('cvs'), $cvPath);
 
                 Applications::create([
                     'job_id' => $request->job_id,
@@ -64,8 +65,10 @@ class ApplicationsController extends Controller
         // Find the application and eager load the related job information
         $application = Applications::with('job')->findOrFail($candidate_id);
 
+        $notes = Notes::where('application_id', $application->id)->get();
+
         // Pass the application to the view
-        return view('candidate.show', compact('application'));
+        return view('candidate.show', compact('application', 'notes'));
     }
 
     public function edit($application_id)
@@ -81,6 +84,23 @@ class ApplicationsController extends Controller
         $application->update($validatedData);
 
         return redirect()->route('candidate.index')->with('success', 'Application updated successfully.');
+    }
+
+    public function updateStatus(Request $request, $application_id)
+    {
+        if (auth()->user()->user_type != 0) {
+            abort(404);
+        }
+        $application = Applications::findOrFail($application_id);
+
+        $request->validate([
+            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Offer'
+        ]);
+
+        $application->status =  $request->appstatus;
+        $application->save();
+
+        return back()->with('update-status-success', 'Application status has been updated successfully');
     }
 
     public function destroy($application_id)
