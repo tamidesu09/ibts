@@ -32,6 +32,7 @@ class AdminController extends Controller
             ->groupBy('type')
             ->get();
 
+
         $jobTypeSeries = $jobTypes->map(function ($item) {
             return [
                 'name' => ucfirst($item->type), // Job type name
@@ -39,6 +40,7 @@ class AdminController extends Controller
                 'drilldown' => ucfirst($item->type) // Drilldown identifier
             ];
         });
+
 
         $statuses = DB::table('applications')
             ->select('status', DB::raw('COUNT(*) as count'))
@@ -92,6 +94,46 @@ class AdminController extends Controller
             ->groupBy('type')
             ->get();
 
+
+
+        $jobApplications = DB::table('applications')
+            // Join with users table to get user information
+            ->join('users', 'applications.user_id', '=', 'users.id')
+            // Join with the jobs table to get the job name based on job_id
+            ->join('jobs', 'applications.job_id', '=', 'jobs.id')
+            // Select job_id, job_name, user_id, user name, and skills
+            ->select('applications.job_id', 'jobs.title as job_name', 'users.name as user_name', 'applications.skills', DB::raw('JSON_LENGTH(applications.skills) as skill_count'))
+            // Group by job_id and user_id to get individual users' skills
+            ->get();
+
+        // Now, to get the count of applications per job (the number of users who applied for each job)
+        $jobApplicationCounts = DB::table('applications')
+            ->join('jobs', 'applications.job_id', '=', 'jobs.id')
+            ->select('applications.job_id', 'jobs.title as job_name', DB::raw('count(*) as application_count'))
+            ->groupBy('applications.job_id', 'jobs.title') // Make sure to group by job_name as well
+            ->get();
+
+        // You can then organize the results in a more user-friendly format
+        $results = [];
+
+        foreach ($jobApplicationCounts as $job) {
+            // Collect applications for each job
+            $users = $jobApplications->where('job_id', $job->job_id);
+
+            // Structure the data for each job
+            $results[$job->job_id] = [
+                'job_name' => $job->job_name, // Now includes actual job name
+                'applications' => $job->application_count,
+                'users' => $users->map(function ($user) {
+                    return [
+                        'name' => $user->user_name,
+                        'skill_count' => $user->skill_count,
+                    ];
+                })->toArray(),
+            ];
+        }
+
+
         return view('admin.index', compact([
             'gendersData',
             'jobTypeSeries',
@@ -101,7 +143,8 @@ class AdminController extends Controller
             'jobCountSeries',
             'feedbacksCount',
             'notesCount',
-            'activities'
+            'activities',
+            'results'
         ]));
     }
 }

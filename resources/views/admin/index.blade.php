@@ -3,6 +3,25 @@
 
 @section('content')
 <div class="container">
+
+    <!-- INDIVIDUAL APPLICATIONS AND APPLICANTS RANKINGS -->
+    <div class="row g-4 mb-5">
+        <h1>INDIVIDUAL APPLICATIONS AND APPLICANTS RANKINGS</h1>
+
+
+        @foreach ($results as $jobId => $jobData)
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ $jobData['job_name'] }} ({{ $jobData['applications'] }} applications)</h3>
+
+                @foreach ($jobData['users'] as $user)
+                <a href="">{{ $user['name'] }} - Skills Count: {{ $user['skill_count'] }} </a> <br>
+                @endforeach
+            </div>
+        </div>
+        @endforeach
+
+    </div>
     <!-- APPLICATION STATUS -->
     <div class="row g-4 mb-5">
         <h1>INDIVIDUAL JOB APPLICATION STATUS COUNT</h1>
