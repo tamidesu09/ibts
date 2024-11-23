@@ -83,13 +83,25 @@ class AdminController extends Controller
             ];
         });
 
+        $feedbacksCount = DB::table('feedback')->count();
+
+        $notesCount = DB::table('notes')->count();
+
+        $activities = DB::table('activities')
+            ->select('type', DB::raw('COUNT(*) as count'))
+            ->groupBy('type')
+            ->get();
+
         return view('admin.index', compact([
             'gendersData',
             'jobTypeSeries',
             'statuses',
             'skillsData',
             'parsedCounts',
-            'jobCountSeries'
+            'jobCountSeries',
+            'feedbacksCount',
+            'notesCount',
+            'activities'
         ]));
     }
 }

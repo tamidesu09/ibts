@@ -2,7 +2,7 @@
 @extends('layouts.admin-layout')
 
 @section('content')
-<div class="container-sm">
+<div class="container">
     <!-- APPLICATION STATUS -->
     <div class="row g-4 mb-5">
         <h1>INDIVIDUAL JOB APPLICATION STATUS COUNT</h1>
@@ -29,6 +29,50 @@
                 <div class="card-body">
                     <h3 class="card-title">{{$count->status}}</h3>
                     <h1 class="text-secondary">{{$count->count}}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+    <!-- FEEDBACKS COUNT -->
+    <div class="row g-0 mb-5">
+        <h1>FEEDBACKS COUNT</h1>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-status-top bg-primary"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Feedbacks Count</h3>
+                    <h1 class="text-secondary">{{$feedbacksCount}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTES COUNT -->
+    <div class="row g-0 mb-5">
+        <h1>NOTES COUNT</h1>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-status-top bg-primary"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Notes Count</h3>
+                    <h1 class="text-secondary">{{$notesCount}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION STATUS -->
+    <div class="row g-4 mb-5">
+        <h1>INDIVIDUAL ACTIVITIES TYPE COUNT</h1>
+        @foreach($activities as $activity)
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-status-top bg-primary"></div>
+                <div class="card-body">
+                    <h3 class="card-title">{{$activity->type}}</h3>
+                    <h1 class="text-secondary">{{$activity->count}}</p>
                 </div>
             </div>
         </div>
@@ -99,7 +143,7 @@
             text: 'Gender Percentage of Applicants'
         },
         tooltip: {
-            valueSuffix: '%'
+            valueSuffix: ''
         },
         plotOptions: {
             series: {
@@ -111,7 +155,7 @@
                 }, {
                     enabled: true,
                     distance: -40,
-                    format: '{point.percentage:.1f}%',
+                    format: '{point.percentage:.0f}%',
                     style: {
                         fontSize: '1.2em',
                         textOutline: 'none',
@@ -126,7 +170,7 @@
             }
         },
         series: [{
-            name: 'Percentage',
+            name: 'Count',
             colorByPoint: true,
             data: chartData
         }]
@@ -167,7 +211,7 @@
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{point.y:.0f}'
                 }
             }
         },
@@ -175,7 +219,7 @@
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
             pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
-                '<b>{point.y:.2f}%</b> of total<br/>'
+                '<b>{point.y:.0f}</b> of total<br/>'
         },
 
         series: [{
@@ -221,7 +265,7 @@
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '{point.y:.0f}'
                 }
             }
         },
@@ -229,7 +273,7 @@
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
             pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
-                '<b>{point.y:.2f}%</b> of total<br/>'
+                '<b>{point.y:.0f}</b> of total<br/>'
         },
 
         series: [{
@@ -253,7 +297,7 @@
             text: 'Skill Percentage of Applicants'
         },
         tooltip: {
-            valueSuffix: '%'
+            valueSuffix: ''
         },
         plotOptions: {
             series: {
@@ -280,7 +324,7 @@
             }
         },
         series: [{
-            name: 'Percentage',
+            name: 'Count',
             colorByPoint: true,
             data: skillsData
         }]
