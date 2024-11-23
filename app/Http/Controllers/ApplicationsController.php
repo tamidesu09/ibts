@@ -113,4 +113,19 @@ class ApplicationsController extends Controller
 
         return redirect()->route('candidate.index')->with('success', 'Applicant has been deleted successfully.');
     }
+
+    public function parseResume(Request $request)
+    {
+        $application = Applications::findOrFail($request->application_id);
+
+        return response()->json($request->skills);
+
+
+        $application->skills = $request->skills;
+        $application->educations = $request->educations;
+        $application->experiences =  $request->experiences;
+
+
+        $application->save();
+    }
 }

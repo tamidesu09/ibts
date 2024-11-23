@@ -1,4 +1,5 @@
 @extends('layouts.admin-layout')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('title', 'Candidates Information')
 
@@ -264,9 +265,9 @@
                     <!-- Additional Tab Contents (Resume, Notes, History) -->
                     <div class="tab-pane" id="tabs-resume">
 
-                        <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 100vh"
-                            title="W3Schools Free Online Web Tutorials">
+                        <button id="parse-resume" class="btn btn-dark mb-3">Parse Resume</button>
 
+                        <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 100vh">
                         </iframe>
                     </div>
 
@@ -440,6 +441,7 @@
 </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- JavaScript to preserve active tab -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -476,6 +478,89 @@
                     targetTab); // Store active tab in sessionStorage
             });
         });
+
+        // $("#parse-resume").on("click", function() {
+        //     const cvPath = "{{ asset($application->cv_path) }}";
+
+        //     const url = 'https://api.apilayer.com/resume_parser/url';
+        //     const params = {
+        //         url: cvPath
+        //     };
+        //     const headers = {
+        //         'apikey': 'EvYEHCEeqjc2IFghCoRNj5UAGDEeChYD',
+        //     };
+
+        //     axios.get(url, {
+        //             headers: headers,
+        //             params: params
+        //         })
+        //         .then(response => {
+        //             console.log("Response:", response.data);
+        //             alert("Resume parsed successfully!");
+        //         })
+        //         .catch(error => {
+        //             console.error("Error:", error);
+        //             alert("An error occurred while parsing the resume.");
+        //         });
+        // });
+
+        $("#parse-resume").on("click", async function() {
+            const resumeUrl = "{{ asset($application->cv_path) }}";
+            const apiUrl = 'https://api.apilayer.com/resume_parser/upload';
+            const apiKey = 'EvYEHCEeqjc2IFghCoRNj5UAGDEeChYD';
+
+            try {
+                // Step 1: Fetch the file from Laravel localhost
+                const fileResponse = await axios.get(resumeUrl, {
+                    responseType: 'arraybuffer'
+                });
+                const fileData = fileResponse.data;
+
+                // Step 2: Send the file to the API
+                const response = await axios.post(apiUrl, fileData, {
+                    headers: {
+                        'Content-Type': 'application/octet-stream',
+                        'apikey': apiKey
+                    }
+                });
+
+                saveResume(response);
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while uploading the resume.");
+            }
+        });
+
+        async function saveResume(response) {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            const skill_list = JSON.stringify(response.data.skills);
+            const education_list = JSON.stringify(response.data.education);
+            const experience_list = JSON.stringify(response.data.experience);
+
+            console.log(skill_list, education_list, experience_list);
+
+            try {
+                const response = await axios.post('{{route("candidates.parseResume")}}', {
+                    application_id: "{{$application->id}}",
+                    skills: skill_list,
+                    educations: education_list,
+                    experiences: experience_list
+                }, {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Add the CSRF token here
+                    }
+                });
+
+                console.log(response);
+
+            } catch (error) {
+                console.error("Error:", error);
+
+            }
+        }
+
     });
 </script>
 
