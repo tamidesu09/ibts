@@ -94,21 +94,33 @@ class AdminController extends Controller
             ->groupBy('type')
             ->get();
 
+
+
+
+        // Fetching applications with users and jobs, sorted by skill count
         $jobApplications = DB::table('applications')
             // Join with users table to get user information
             ->join('users', 'applications.user_id', '=', 'users.id')
             // Join with the jobs table to get the job name based on job_id
             ->join('jobs', 'applications.job_id', '=', 'jobs.id')
-            // Select job_id, job_name, user_id, user name, skills, and application id
-            ->select('applications.id as application_id', 'applications.job_id', 'jobs.title as job_name', 'users.name as user_name', 'applications.skills', DB::raw('JSON_LENGTH(applications.skills) as skill_count'))
-            // Group by job_id and user_id to get individual users' skills
+            // Select necessary fields, including skills and requirements JSON columns
+            ->select(
+                'applications.id as application_id',
+                'applications.job_id',
+                'jobs.title as job_name',
+                'users.name as user_name',
+                'applications.skills',
+                'jobs.requirements',
+                DB::raw('JSON_LENGTH(applications.skills) as skill_count')
+            )
+            // Fetch the job applications
             ->get();
 
         // Now, to get the count of applications per job (the number of users who applied for each job)
         $jobApplicationCounts = DB::table('applications')
             ->join('jobs', 'applications.job_id', '=', 'jobs.id')
             ->select('applications.job_id', 'jobs.title as job_name', DB::raw('count(*) as application_count'))
-            ->groupBy('applications.job_id', 'jobs.title') // Make sure to group by job_name as well
+            ->groupBy('applications.job_id', 'jobs.title') // Group by job_id and job_name
             ->get();
 
         // You can then organize the results in a more user-friendly format
@@ -118,22 +130,36 @@ class AdminController extends Controller
             // Collect applications for each job
             $users = $jobApplications->where('job_id', $job->job_id);
 
-            // Sort the users by skill count in descending order
-            $sortedUsers = $users->sortByDesc('skill_count');
-
             // Structure the data for each job
             $results[$job->job_id] = [
                 'job_name' => $job->job_name, // Now includes actual job name
                 'applications' => $job->application_count,
-                'users' => $sortedUsers->map(function ($user) {
+                'users' => $users->map(function ($user) use ($job) {
+                    // Decode the JSON columns into arrays for comparison
+                    $applicationSkills = json_decode($user->skills, true); // Skills from application
+                    $jobRequirements = json_decode($user->requirements, true); // Requirements from job
+
+                    // Calculate the matching skills
+                    $matchingSkills = array_intersect($applicationSkills, $jobRequirements);
+                    $matchingSkillCount = count($matchingSkills);
+
+                    // Calculate the matched skill percentage
+                    $matchedSkillPercentage = 0;
+                    if (count($jobRequirements) > 0) {
+                        $matchedSkillPercentage = round(($matchingSkillCount / count($jobRequirements)) * 100);
+                    }
+
                     return [
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
                         'application_id' => $user->application_id, // Include the application ID here
+                        'matched_skill_percentage' => $matchedSkillPercentage.'%', // Add matched skill percentage
                     ];
                 })->toArray(),
             ];
         }
+
+
 
 
 

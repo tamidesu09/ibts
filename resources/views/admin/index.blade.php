@@ -163,7 +163,9 @@
                                                     class="text-decoration-none d-block p-2 rounded shadow-sm"
                                                     style="background-color: #f8f9fa;">
                                                     <strong>{{ $user['name'] }}</strong><br>
-                                                    <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
+                                                    <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span> <br>
+                                                    
+                                                    <span class="text-muted">Matched Skill to Job Requirements: {{ $user['matched_skill_percentage'] }}</span>
                                                 </a>
                                             </div>
                                             @endforeach

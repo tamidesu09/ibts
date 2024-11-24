@@ -31,10 +31,9 @@ class Job extends Model
     }
 
 
-     // In Job.php model
-public function applications()
-{
-    return $this->hasMany(Application::class, 'job_id');
-}
-
+    // In Job.php model
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'job_id');
+    }
 }
