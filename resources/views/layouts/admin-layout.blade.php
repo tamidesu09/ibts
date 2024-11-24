@@ -155,6 +155,7 @@
     <div class="page">
         @auth
         @if(auth()->user()->user_type == 0)
+        @include('layouts.top-navigation')
         @include('layouts.sidebar')
         @endif
         @endauth

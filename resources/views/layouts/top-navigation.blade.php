@@ -8,6 +8,8 @@
 
     <div class="collapse navbar-collapse" id="navbar-menu">
       <!-- Centered navigation links -->
+      @auth
+      @if(auth()->user()->user_type == 1)
       <ul class="navbar-nav mx-auto">
         <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('home') }}">Home</a>
@@ -25,9 +27,11 @@
           <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
         </li>
       </ul>
+      @endif
+      @endauth
 
       <!-- Right-side user-related elements -->
-      <div class="navbar-nav flex-row order-md-last">
+      <div class="navbar-nav flex-row order-md-last ms-auto">
         <div class="d-none d-md-flex">
           @guest
           @if (Route::has('login'))
@@ -51,7 +55,11 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              @auth
+              @if(auth()->user()->user_type == 1)
               <a href="{{ route('applicants.getJobApplications') }}" class="dropdown-item">My Job Applications</a>
+              @endif
+              @endauth
               <a href="{{ route('profile.edit') }}" class="dropdown-item">Profile</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
