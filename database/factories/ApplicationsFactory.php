@@ -64,7 +64,7 @@ class ApplicationsFactory extends Factory
             'Node.js'
         ];
 
-        $selectedSkills = $this->faker->randomElements($skills, $count = rand(3, 8));
+        $selectedSkills = $this->faker->randomElements($skills, $count = rand(3, 5));
 
 
         return [
@@ -76,7 +76,7 @@ class ApplicationsFactory extends Factory
             'job_id' => $job->id,
             'is_parsed' => fake()->randomElement($array = array(1)),
             'status' => fake()->randomElement($array = array('Application Received', 'Screen', 'Under Review', 'Interview Schedule', 'Offer')),
-            'skills' => json_encode($selectedSkills)
+            'skills' => json_encode($selectedSkills),
         ];
     }
 }
