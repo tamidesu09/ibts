@@ -223,8 +223,8 @@
                                         @if(!empty($application->educations) && count(json_decode($application->educations)) > 0)
                                         @foreach(json_decode($application->educations) as $education)
                                         <div>
-                                            <h4>{{ $education->name }}</h4>
-                                            <p>{{ implode(', ', $education->dates) }}</p>
+                                            <h4>{{ $education->name ?? "" }}</h4>
+                                            <p>{{ implode(', ', $education->dates) ?? "" }}</p>
                                         </div>
                                         @unless($loop->last)
                                         <hr>
@@ -247,10 +247,10 @@
                                         @if(!empty($application->experiences) && count(json_decode($application->experiences)) > 0)
                                         @foreach(json_decode($application->experiences) as $experience)
                                         <div>
-                                            <h4>{{ $experience->title }}</h4>
-                                            <p>{{ implode(', ', $experience->dates) }}</p>
-                                            <p><strong>Location:</strong> {{ $experience->location }}</p>
-                                            <p><strong>Organization:</strong> {{ $experience->organization }}</p>
+                                            <h4>{{ $experience->title ?? "" }}</h4>
+                                            <p>{{ implode(', ', $experience->dates) ?? "" }}</p>
+                                            <p><strong>Location:</strong> {{ $experience->location ?? "" }}</p>
+                                            <p><strong>Organization:</strong> {{ $experience->organization ?? "" }}</p>
                                         </div>
                                         @unless($loop->last)
                                         <hr>

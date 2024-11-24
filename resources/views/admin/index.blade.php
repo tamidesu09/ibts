@@ -4,139 +4,259 @@
 @section('content')
 <div class="container">
 
-    <!-- INDIVIDUAL APPLICATIONS AND APPLICANTS RANKINGS -->
-    <div class="row g-4 mb-5">
-        <h1>INDIVIDUAL APPLICATIONS AND APPLICANTS RANKINGS</h1>
-
-
-        @foreach ($results as $jobId => $jobData)
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{ $jobData['job_name'] }} ({{ $jobData['applications'] }} applications)</h3>
-
-                @foreach ($jobData['users'] as $user)
-                <a href="{{route('candidates.show', $user['application_id'])}}">{{ $user['name'] }} - Skills Count: {{ $user['skill_count'] }} </a> <br>
-                @endforeach
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                <li class="nav-item">
+                    <a href="#tabs-charts" class="nav-link active" data-bs-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-analytics">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                            <path d="M9 17l0 -5" />
+                            <path d="M12 17l0 -1" />
+                            <path d="M15 17l0 -3" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs-applications-rankings" class="nav-link" data-bs-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-sort-ascending-2">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M16.852 5.011l.058 -.007l.09 -.004l.075 .003l.126 .017l.111 .03l.111 .044l.098 .052l.104 .074l.082 .073l3 3a1 1 0 1 1 -1.414 1.414l-1.293 -1.292v9.585a1 1 0 0 1 -2 0v-9.585l-1.293 1.292a1 1 0 0 1 -1.32 .083l-.094 -.083a1 1 0 0 1 0 -1.414l3 -3q .053 -.054 .112 -.097l.11 -.071l.114 -.054l.105 -.035z" />
+                            <path d="M9.5 4a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1 -1.5 1.5h-4a1.5 1.5 0 0 1 -1.5 -1.5v-4a1.5 1.5 0 0 1 1.5 -1.5z" />
+                            <path d="M9.5 13a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1 -1.5 1.5h-4a1.5 1.5 0 0 1 -1.5 -1.5v-4a1.5 1.5 0 0 1 1.5 -1.5z" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs-status-count" class="nav-link" data-bs-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-analytics">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                            <path d="M9 17l0 -5" />
+                            <path d="M12 17l0 -1" />
+                            <path d="M15 17l0 -3" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs-count" class="nav-link" data-bs-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-number-123">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 10l2 -2v8" />
+                            <path d="M9 8h3a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3" />
+                            <path d="M17 8h2.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-1.5h1.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-2.5" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tabs-activities-type-count" class="nav-link" data-bs-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 12h4l3 8l4 -16l3 8h4" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
         </div>
-        @endforeach
 
-    </div>
-    <!-- APPLICATION STATUS -->
-    <div class="row g-4 mb-5">
-        <h1>INDIVIDUAL JOB APPLICATION STATUS COUNT</h1>
-        @foreach($statuses as $status)
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-status-top bg-primary"></div>
-                <div class="card-body">
-                    <h3 class="card-title">{{$status->status}}</h3>
-                    <h1 class="text-secondary">{{$status->count}}</p>
+
+        <div class="card-body">
+            <div class="tab-content">
+
+
+                <div class="tab-pane active show" id="tabs-charts">
+                    <h1 class="text-center mb-4">Charts and Graphs</h1>
+                    <div class="container my-5">
+                        <div class="row g-4">
+                            <!-- GENDERS -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h4 class="card-title mb-0">Gender Composition</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <figure class="highcharts-figure">
+                                            <div id="gender-container"></div>
+                                            <h4 class="highcharts-description" style="text-align: justify;">
+                                                The chart visualizes the distribution of respondents by sex. Each category is displayed as a proportion of the total, providing a clear view of the sex demographics within the dataset.
+                                            </h4>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- JOB TYPE -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h4 class="card-title mb-0">Job Types</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <figure class="highcharts-figure">
+                                            <div id="job-type-container"></div>
+                                            <h4 class="highcharts-description" style="text-align: justify;">
+                                                The chart illustrates the distribution of job types among the dataset. The visualization highlights the proportion of each job type, providing insight into employment structures.
+                                            </h4>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- APPLIED JOBS -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h4 class="card-title mb-0">Applied Jobs</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <figure class="highcharts-figure">
+                                            <div id="applied-jobs-container"></div>
+                                            <h4 class="highcharts-description" style="text-align: justify;">
+                                                The chart showcases the total count of jobs applied for by users. This visualization provides insights into application trends and user activity levels over a specific period.
+                                            </h4>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SKILL COUNT FOR ALL CANDIDATES -->
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h4 class="card-title mb-0">Skill Count for All Candidates</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <figure class="highcharts-figure">
+                                            <div id="skill-count-container"></div>
+                                            <h4 class="highcharts-description" style="text-align: justify;">
+                                                The chart displays the total number of skills listed by all candidates, categorized to highlight the most common competencies. This visualization helps identify the overall skill pool and highlights key areas of expertise among candidates.
+                                            </h4>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabs-applications-rankings">
+                    <h1 class="text-center mb-4">Individual Applications and Applicants Rankings</h1>
+                    <div class="container mt-5">
+                        <div class="row g-4">
+                            @foreach ($results as $jobId => $jobData)
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h3 class="card-title mb-0">
+                                            {{ $jobData['job_name'] }}
+                                            <span class="badge bg-blue">{{ $jobData['applications'] }} applications</span>
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            @foreach ($jobData['users'] as $user)
+                                            <div class="col-md-6 mb-3">
+                                                <a href="{{ route('candidates.show', $user['application_id']) }}"
+                                                    class="text-decoration-none d-block p-2 rounded shadow-sm"
+                                                    style="background-color: #f8f9fa;">
+                                                    <strong>{{ $user['name'] }}</strong><br>
+                                                    <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
+                                                </a>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabs-status-count">
+                    <!-- APPLICATION STATUS -->
+                    <div class="row g-4 mb-5">
+                        @foreach($statuses as $status)
+                        <div class="col-sm-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title fw-bold mb-3" style="color: #343a40;">{{ $status->status }}</h4>
+                                    <h1 class="text-primary display-4">{{ $status->count }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabs-count">
+                    <h1 class="text-center mb-5 text-uppercase font-weight-bold">Resume Parsed, Feedbacks, and Notes Count</h1>
+
+                    <!-- PARSED RESUME COUNT, FEEDBACKS COUNT, NOTES COUNT in a single row -->
+                    <div class="row g-4 mb-5">
+
+                        <!-- RESUME PARSED -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title fw-bold mb-3">Resume Parsed</h3>
+                                    <h2 class="text-primary display-4">{{ $parsedCounts->sum('count') }}</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FEEDBACKS COUNT -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title fw-bold mb-3">Feedbacks Count</h3>
+                                    <h2 class="text-primary display-4">{{ $feedbacksCount }}</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NOTES COUNT -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title fw-bold mb-3">Notes Count</h3>
+                                    <h2 class="text-primary display-4">{{ $notesCount }}</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabs-activities-type-count">
+                    <h1 class="text-center mb-5 text-uppercase font-weight-bold">
+                        <!-- APPLICATION STATUS -->
+                        <div class="row g-4 mb-5">
+                            <h1>INDIVIDUAL ACTIVITIES TYPE COUNT</h1>
+                            @foreach($activities as $activity)
+                            <div class="card shadow-sm border-0">
+                                <div class="card">
+                                    <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                    <div class="card-body text-center">
+                                        <h3 class="card-title fw-bold mb-3">{{$activity->type}}</h3>
+                                        <h1 class="text-primary display-4">{{$activity->count}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                 </div>
             </div>
         </div>
-        @endforeach
     </div>
 
-    <!-- PARSED RESUME COUNT -->
-    <div class="row g-4 mb-5">
-        <h1>RESUME PARSED</h1>
-        @foreach($parsedCounts as $count)
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-status-top bg-primary"></div>
-                <div class="card-body">
-                    <h3 class="card-title">{{$count->status}}</h3>
-                    <h1 class="text-secondary">{{$count->count}}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- FEEDBACKS COUNT -->
-    <div class="row g-0 mb-5">
-        <h1>FEEDBACKS COUNT</h1>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-status-top bg-primary"></div>
-                <div class="card-body">
-                    <h3 class="card-title">Feedbacks Count</h3>
-                    <h1 class="text-secondary">{{$feedbacksCount}}</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOTES COUNT -->
-    <div class="row g-0 mb-5">
-        <h1>NOTES COUNT</h1>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-status-top bg-primary"></div>
-                <div class="card-body">
-                    <h3 class="card-title">Notes Count</h3>
-                    <h1 class="text-secondary">{{$notesCount}}</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- APPLICATION STATUS -->
-    <div class="row g-4 mb-5">
-        <h1>INDIVIDUAL ACTIVITIES TYPE COUNT</h1>
-        @foreach($activities as $activity)
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-status-top bg-primary"></div>
-                <div class="card-body">
-                    <h3 class="card-title">{{$activity->type}}</h3>
-                    <h1 class="text-secondary">{{$activity->count}}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- GENDERS -->
-    <figure class="highcharts-figure">
-        <div id="gender-container"></div>
-        <h3 class="highcharts-description">
-            Pie charts are very popular for showing a compact overview of a
-            composition or comparison. While they can be harder to read than
-            column charts, they remain a popular choice for small datasets.
-        </h3>
-    </figure>
-
-    <!-- JOB TYPE -->
-    <figure class="highcharts-figure">
-        <div id="job-type-container"></div>
-        <h3 class="highcharts-description">
-            Chart showing browser market shares. Clicking on individual columns
-            brings up more detailed data. This chart makes use of the drilldown
-            feature in Highcharts to easily switch between datasets.
-        </h3>
-    </figure>
-
-    <!-- APPLIED JOBS -->
-    <figure class="highcharts-figure">
-        <div id="applied-jobs-container"></div>
-        <h3 class="highcharts-description">
-            Chart showing browser market shares. Clicking on individual columns
-            brings up more detailed data. This chart makes use of the drilldown
-            feature in Highcharts to easily switch between datasets.
-        </h3>
-    </figure>
-
-    <!-- SKILL COUNT FOR ALL CANDIDATES -->
-    <figure class="highcharts-figure">
-        <div id="skill-count-container"></div>
-        <h3 class="highcharts-description">
-            Chart showing browser market shares. Clicking on individual columns
-            brings up more detailed data. This chart makes use of the drilldown
-            feature in Highcharts to easily switch between datasets.
-        </h3>
-    </figure>
 
 
 </div>
