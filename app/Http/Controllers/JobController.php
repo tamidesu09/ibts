@@ -31,6 +31,13 @@ class JobController extends Controller
             abort(404);
         }
         $validatedData = $request->validated();
+
+        if (!empty($validatedData['requirements'])) {
+            $validatedData['requirements'] = json_encode(
+                array_map('trim', explode(',', $validatedData['requirements']))
+            );
+        }
+
         Job::create($validatedData);
         return back()->with('success', 'Job has been created successfully.');
     }
@@ -40,8 +47,8 @@ class JobController extends Controller
         $user = User::findOrFail(auth()->user()->id);
         $job = Job::findOrFail($job_id);
         $hasApplied = $user->applications()->where('job_id', $job->id)->exists();
-  
-        return view('jobs.show', compact('job','hasApplied'));
+
+        return view('jobs.show', compact('job', 'hasApplied'));
     }
 
     public function edit($job_id)
@@ -50,6 +57,8 @@ class JobController extends Controller
             abort(404);
         }
         $job = Job::findOrFail($job_id); // Retrieves the job by ID or throws a 404 error if not found
+        $job->requirements = implode(', ', json_decode($job->requirements, true));
+        
         return view('jobs.edit', compact('job')); // Pass the job data to the edit view
     }
 
@@ -60,6 +69,12 @@ class JobController extends Controller
         }
         // Validate the request data
         $validatedData = $request->validated();
+
+        if (!empty($validatedData['requirements'])) {
+            $validatedData['requirements'] = json_encode(
+                array_map('trim', explode(',', $validatedData['requirements']))
+            );
+        }
 
         // Find the job by ID
         $job = Job::findOrFail($job_id);

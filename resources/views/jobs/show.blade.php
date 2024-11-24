@@ -79,7 +79,7 @@
 
             <!-- Job Details -->
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card mb-5">
                     <div class="card-header bg-dark text-white">
                         <h1 class="card-title fw-bold">{{ $job->title }}</h1>
                     </div>
@@ -89,7 +89,28 @@
                         <p>{{ $job->hours_start }} - {{ $job->hours_end }}</p>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h1 class="card-title fw-bold">Job Requirements</h1>
+                    </div>
+                    <div class="card-body">
+                        @php
+                        $requirements = json_decode($job->requirements, true);
+                        @endphp
+
+                        @if ($requirements)
+                        <ul>
+                            @foreach ($requirements as $requirement)
+                            <li>{{ $requirement }}</li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </div>
+                </div>
             </div>
+
+
 
             @if(auth()->user()->user_type == 1)
             <!-- Application Form -->

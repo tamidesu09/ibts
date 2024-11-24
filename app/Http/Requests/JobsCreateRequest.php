@@ -27,6 +27,7 @@ class JobsCreateRequest extends FormRequest
             'description' => ['required', 'max:10000'],
             'hours_start'=> ['required'],
             'hours_end'=> ['required'],
+            'requirements' => ['required']
         ];  
     }
 }
