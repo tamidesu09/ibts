@@ -224,7 +224,7 @@
                                         @foreach(json_decode($application->educations) as $education)
                                         <div>
                                             <h4>{{ $education->name ?? "" }}</h4>
-                                            <p>{{ implode(', ', $education->dates) ?? "" }}</p>
+                                            <p>{{ implode(',', $education->dates) ?? "" }}</p>
                                         </div>
                                         @unless($loop->last)
                                         <hr>

@@ -37,7 +37,7 @@
     <div class="container">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-dark text-white">
-                <h4 class="mb-0">Job Listings Overview</h4>
+                <h4 class="mb-0">List of Activities</h4>
             </div>
             <div class="card-body p-3">
                 @if ($activities->isEmpty())

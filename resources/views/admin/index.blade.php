@@ -147,27 +147,68 @@
                     <div class="container mt-5">
                         <div class="row g-4">
                             @foreach ($results as $jobId => $jobData)
-                            <div class="col-md-6">
-                                <div class="card shadow-sm">
-                                    <div class="card-header bg-dark text-white">
-                                        <h3 class="card-title mb-0">
+                            <div class="col-lg-6">
+                                <div class="card shadow border-0">
+                                    <div class="card-header card-header bg-dark text-white">
+                                        <h3 class="card-title mb-0 d-flex justify-content-between align-items-center">
                                             {{ $jobData['job_name'] }}
-                                            <span class="badge bg-blue">{{ $jobData['applications'] }} applications</span>
+                                            <span class="badge bg-azure text-dark" data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                title="Total Applications">{{ $jobData['applications'] }} applications</span>
                                         </h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-12">
+                                                <h5 class="text-center text-azure">Top Ranking Candidates</h5>
+                                                <ul class="list-group">
+                                                    @php
+                                                    // Sort users by matched_skill_percentage in descending order
+                                                    $sortedUsers = collect($jobData['users'])->sortByDesc('matched_skill_percentage')->toArray();
+                                                    $topUsers = array_slice($sortedUsers, 0, 3); // Get top 3 users
+                                                    @endphp
+
+                                                    @foreach ($topUsers as $index => $user)
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>
+                                                            <a href="{{ route('candidates.show', $user['application_id']) }}" class="text-dark">
+                                                                <strong>
+                                                                    @if ($index === 0)
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#4299e1" stroke="#4299e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-crown me-2">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                        <path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" />
+                                                                    </svg>
+                                                                    @endif
+                                                                    {{ $index + 1 }}. {{ $user['name'] }}
+                                                                </strong>
+                                                                <br>
+                                                                <small class="text-muted">Skills: {{ $user['skill_count'] }}</small>
+                                                            </a>
+                                                        </span>
+                                                        <span class="d-flex align-items-center">
+                                                            @if ($index === 0)
+                                                            @endif
+                                                            <span class="badge bg-info text-dark">Matched: {{ $user['matched_skill_percentage'] }}</span>
+                                                        </span>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3">
                                             @foreach ($jobData['users'] as $user)
-                                            <div class="col-md-6 mb-3">
+                                            @if (!in_array($user['application_id'], array_column($topUsers, 'application_id')))
+                                            <div class="col-sm-12">
                                                 <a href="{{ route('candidates.show', $user['application_id']) }}"
-                                                    class="text-decoration-none d-block p-2 rounded shadow-sm"
-                                                    style="background-color: #f8f9fa;">
-                                                    <strong>{{ $user['name'] }}</strong><br>
-                                                    <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span> <br>
-                                                    
-                                                    <span class="text-muted">Matched Skill to Job Requirements: {{ $user['matched_skill_percentage'] }}</span>
+                                                    class="d-block p-3 rounded shadow-sm text-decoration-none"
+                                                    style="background-color: #f9f9f9; transition: transform 0.2s, box-shadow 0.2s;">
+                                                    <strong class="text-dark">{{ $user['name'] }}</strong><br>
+                                                    <span class="text-muted">Matched Skills: {{ $user['matched_skill_percentage'] }}</span><br>
+                                                    <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
                                                 </a>
                                             </div>
+                                            @endif
                                             @endforeach
                                         </div>
                                     </div>
@@ -177,6 +218,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="tab-pane" id="tabs-status-count">
                     <!-- APPLICATION STATUS -->

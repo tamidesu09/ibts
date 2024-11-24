@@ -136,8 +136,10 @@ class AdminController extends Controller
                 'applications' => $job->application_count,
                 'users' => $users->map(function ($user) use ($job) {
                     // Decode the JSON columns into arrays for comparison
-                    $applicationSkills = json_decode($user->skills, true); // Skills from application
-                    $jobRequirements = json_decode($user->requirements, true); // Requirements from job
+                    $applicationSkills = json_decode($user->skills, true)
+                        ?: []; // Skills from application
+                    $jobRequirements = json_decode($user->requirements, true)
+                        ?: []; // Requirements from job
 
                     // Calculate the matching skills
                     $matchingSkills = array_intersect($applicationSkills, $jobRequirements);
@@ -153,13 +155,11 @@ class AdminController extends Controller
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
                         'application_id' => $user->application_id, // Include the application ID here
-                        'matched_skill_percentage' => $matchedSkillPercentage.'%', // Add matched skill percentage
+                        'matched_skill_percentage' => $matchedSkillPercentage . '%', // Add matched skill percentage
                     ];
                 })->toArray(),
             ];
         }
-
-
 
 
 

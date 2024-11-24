@@ -39,19 +39,19 @@
                                     </div>
                                     <div class=" col-sm-6">
                                         <div class="steps">
-                                            <a href="#" class="step-item @if($application->status == "Application Received") active @endif">
+                                            <a href="#" class="step-item @if($application->status == " Application Received") active @endif">
                                                 Application Received
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == "Screen") active @endif">
+                                            <a href="#" class="step-item @if($application->status == " Screen") active @endif">
                                                 Screen
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == "Under Review") active @endif">
+                                            <a href="#" class="step-item @if($application->status == " Under Review") active @endif">
                                                 Under Review
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == "Interview Schedule") active @endif">
+                                            <a href="#" class="step-item @if($application->status == " Interview Schedule") active @endif">
                                                 Interview Schedule
                                             </a>
-                                            <span href="#" class="step-item @if($application->status == "Offer") active @endif">
+                                            <span href="#" class="step-item @if($application->status == " Offer") active @endif">
                                                 Offer
                                             </span>
                                         </div>
