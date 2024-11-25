@@ -207,13 +207,13 @@
                                         <ul class="list-unstyled">
                                             <li class="d-flex flex-wrap gap-2">
                                                 @foreach(json_decode($application->skills) as $skill)
-                                                    <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
+                                                <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
                                                 @endforeach
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                @endif                                
+                                @endif
 
                                 @if($application->is_parsed === 1)
                                 <!-- Additional Information Card -->
@@ -434,31 +434,58 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Application Status</label>
-                                <div class="d-flex align-items-center">
-                                    <select class="form-select me-2 @error('appstatus') is-invalid @enderror"
-                                        name="appstatus">
-                                        <option value="Application Received" @selected(old('appstatus', $application->status) == 'Application Received') disabled>
-                                            Application Received
-                                        </option>
-                                        <option value="Screen" @selected(old('appstatus', $application->status) == 'Screen')>
-                                            Screen
-                                        </option>
-                                        <option value="Under Review" @selected(old('appstatus', $application->status) == 'Under Review')>
-                                            Under Review
-                                        </option>
-                                        <option value="Interview Schedule" @selected(old('appstatus', $application->status) == 'Interview Schedule')>
-                                            Interview Schedule
-                                        </option>
-                                        <option value="Offer" @selected(old('appstatus', $application->status) == 'Offer')>
-                                            Offer
-                                        </option>
-                                    </select>
-                                    @error('appstatus')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                </div>
+
+
+                                <select class="form-select mb-2 @error('appstatus') is-invalid @enderror"
+                                    name="appstatus">
+                                    <option value="Application Received" @selected(old('appstatus', $application->status) == 'Application Received') disabled>
+                                        Application Received
+                                    </option>
+                                    <option value="Screen" @selected(old('appstatus', $application->status) == 'Screen')>
+                                        Screen
+                                    </option>
+                                    <option value="Under Review" @selected(old('appstatus', $application->status) == 'Under Review')>
+                                        Under Review
+                                    </option>
+                                    <option value="Interview Schedule" @selected(old('appstatus', $application->status) == 'Interview Schedule')>
+                                        Interview Schedule
+                                    </option>
+                                    <option value="Offer" @selected(old('appstatus', $application->status) == 'Offer')>
+                                        Offer
+                                    </option>
+                                </select>
+                                @error('appstatus')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Manually Edit Correct Answer Count</label>
+                                <input type="number" class="form-control @error('correct_answers') is-invalid @enderror" name="correct_answers" value="{{$application->correct_answers}}">
+                                <p class="text-muted">You may edit the actual correct answer count for better accurary and fairness</p>
+                                @error('correct_answers')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+
                         </form>
+                        @if(!empty($application->answers))
+                        <hr>
+                        <h1>Job Questions</h1>
+                        @foreach(json_decode($application->job->questions) as $question)
+                        <h3> {{$question}} </h3>
+                        @endforeach
+                        <hr>
+                        <h1>Candidate Answers</h1>
+                        @foreach(json_decode($application->answers) as $answer)
+                        <h3> {{$answer}} </h3>
+                        @endforeach
+                        <hr>
+                        <h1>Correct Answers</h1>
+                        <h3> {{$application->correct_answers}} </h3>
+                        @endif
                     </div>
                 </div>
             </div>

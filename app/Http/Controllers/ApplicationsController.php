@@ -97,10 +97,12 @@ class ApplicationsController extends Controller
         $application = Applications::findOrFail($application_id);
 
         $request->validate([
-            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Offer'
+            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Offer',
+            'correct_answers' => 'required|numeric'
         ]);
 
         $application->status =  $request->appstatus;
+        $application->correct_answers =  $request->correct_answers;
         $application->save();
 
         return back()->with('update-status-success', 'Application status has been updated successfully');
