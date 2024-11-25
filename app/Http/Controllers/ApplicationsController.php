@@ -7,6 +7,7 @@ use App\Http\Requests\ApplicationsUpdateRequest;
 use App\Models\Applications;
 use App\Models\Notes;
 use App\Models\User;
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 
@@ -146,5 +147,18 @@ class ApplicationsController extends Controller
         $activities = $user->activities()->get();
 
         return view('status', compact('job_applications', 'activities'));
+    }
+
+    public function showEvaluation($job_id)
+    {
+        if (auth()->user()->user_type != 1) {
+            abort(404);
+        }
+
+        $job = Job::findOrFail($job_id);
+
+        $questions = json_decode($job->questions);  // Assuming JSON column
+
+        return view('evaluation', compact('job', 'questions'));
     }
 }

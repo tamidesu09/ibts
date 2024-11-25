@@ -35,25 +35,30 @@
                                     <div class="col-sm-6">
                                         <h4>
                                             <a href="{{route('jobs.show', $application->job_id)}}"> {{$application->job->title}}</a>
+                                            <br>
+                                            @if($application->status == 'Under Review')
+                                            <a class="text-warning" href="{{route('applicants.showEvaluation', $application->job_id)}}">Answer Evaluation</a>
+                                            @endif
                                         </h4>
                                     </div>
                                     <div class=" col-sm-6">
                                         <div class="steps">
-                                            <a href="#" class="step-item @if($application->status == " Application Received") active @endif">
+                                            <a href="#" class="step-item @if($application->status == 'Application Received') active @endif">
                                                 Application Received
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == " Screen") active @endif">
+                                            <a href="#" class="step-item @if($application->status == 'Screen') active @endif">
                                                 Screen
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == " Under Review") active @endif">
+                                            <a href="#" class="step-item @if($application->status == 'Under Review') active @endif">
                                                 Under Review
                                             </a>
-                                            <a href="#" class="step-item @if($application->status == " Interview Schedule") active @endif">
+                                            <a href="#" class="step-item @if($application->status == 'Interview Schedule') active @endif">
                                                 Interview Schedule
                                             </a>
-                                            <span href="#" class="step-item @if($application->status == " Offer") active @endif">
+                                            <span class="step-item @if($application->status == 'Offer') active @endif">
                                                 Offer
                                             </span>
+
                                         </div>
                                     </div>
                                 </div>

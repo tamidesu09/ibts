@@ -10,6 +10,8 @@ use App\Http\Controllers\NotesController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\EvaluationController;
+
 
 
 
@@ -80,6 +82,10 @@ Route::get('/chats', function () {
 
 
 Route::get('job_applications', [ApplicationsController::class, 'getJobApplications'])->middleware(['auth', 'verified'])->name('applicants.getJobApplications');
+Route::get('evaluation/{job_id}', [ApplicationsController::class, 'showEvaluation'])->middleware(['auth', 'verified'])->name('applicants.showEvaluation');
+Route::post('evaluate', [EvaluationController::class, 'evaluate'])->middleware(['auth', 'verified'])->name('applicants.evaluate');
+
+
 
 Route::get('jobs', [JobController::class, 'index'])->middleware(['auth', 'verified'])->name('jobs.index');
 Route::get('jobs/create', [JobController::class, 'create'])->middleware(['auth', 'verified'])->name('jobs.create');
@@ -121,5 +127,3 @@ Route::get('/candidate/{applicationId}', [NotesController::class, 'show'])->name
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
 Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
 Route::post('/activities/store', [ActivityController::class, 'store'])->name('activities.store');
-
-Route::post('/chat', [ChatController::class, 'chat'])->name('gpt.chat');
