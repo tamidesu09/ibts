@@ -193,6 +193,7 @@
                                                             @endif
                                                             <span class="badge bg-info text-dark">Matched: {{ $user['matched_skill_percentage'] }}</span>
                                                         </span>
+                                                        <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
                                                     </li>
                                                     @endforeach
                                                 </ul>
@@ -209,6 +210,7 @@
                                                     <strong class="text-dark">{{ $user['name'] }}</strong><br>
                                                     <span class="text-muted">Matched Skills: {{ $user['matched_skill_percentage'] }}</span><br>
                                                     <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
+                                                    <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
                                                 </a>
                                             </div>
                                             @endif

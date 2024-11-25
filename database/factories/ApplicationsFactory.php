@@ -77,6 +77,7 @@ class ApplicationsFactory extends Factory
             'is_parsed' => fake()->randomElement($array = array(1)),
             'status' => fake()->randomElement($array = array('Application Received', 'Screen', 'Under Review', 'Interview Schedule', 'Offer')),
             'skills' => json_encode($selectedSkills),
+            'correct_answers' => fake()->randomDigit()
         ];
     }
 }

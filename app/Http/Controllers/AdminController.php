@@ -96,7 +96,6 @@ class AdminController extends Controller
 
 
 
-
         // Fetching applications with users and jobs, sorted by skill count
         $jobApplications = DB::table('applications')
             // Join with users table to get user information
@@ -110,6 +109,7 @@ class AdminController extends Controller
                 'jobs.title as job_name',
                 'users.name as user_name',
                 'applications.skills',
+                'applications.correct_answers',  // Include the correct_answers field
                 'jobs.requirements',
                 DB::raw('JSON_LENGTH(applications.skills) as skill_count')
             )
@@ -136,10 +136,8 @@ class AdminController extends Controller
                 'applications' => $job->application_count,
                 'users' => $users->map(function ($user) use ($job) {
                     // Decode the JSON columns into arrays for comparison
-                    $applicationSkills = json_decode($user->skills, true)
-                        ?: []; // Skills from application
-                    $jobRequirements = json_decode($user->requirements, true)
-                        ?: []; // Requirements from job
+                    $applicationSkills = json_decode($user->skills, true) ?: []; // Skills from application
+                    $jobRequirements = json_decode($user->requirements, true) ?: []; // Requirements from job
 
                     // Calculate the matching skills
                     $matchingSkills = array_intersect($applicationSkills, $jobRequirements);
@@ -151,18 +149,19 @@ class AdminController extends Controller
                         $matchedSkillPercentage = round(($matchingSkillCount / count($jobRequirements)) * 100);
                     }
 
+                    // Include the correct_answers column
+                    $correctAnswers = $user->correct_answers;
+
                     return [
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
                         'application_id' => $user->application_id, // Include the application ID here
                         'matched_skill_percentage' => $matchedSkillPercentage . '%', // Add matched skill percentage
+                        'correct_answers' => $correctAnswers, // Append the correct_answers column here
                     ];
                 })->toArray(),
             ];
         }
-
-
-
 
         return view('admin.index', compact([
             'gendersData',
