@@ -4,6 +4,9 @@
 @section('content')
 <div class="container">
 
+    <title>Dashboard</title>
+
+
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">

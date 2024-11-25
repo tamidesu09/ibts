@@ -241,6 +241,13 @@
     </div>
 </div>
 
+@include('layouts.datatable')
+
+
+<script>
+    new DataTable('#jobs-table');
+</script>
+
 
 
 <!-- JavaScript to handle modal confirmation -->

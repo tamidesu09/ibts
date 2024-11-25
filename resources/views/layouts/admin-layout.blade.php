@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - iBTS</title>
+    <link rel="icon" href="{{ asset('img/admin-removebg-preview.png') }}" type="image/png">
 
     <link rel="stylesheet" href="{{ asset('css/tabler.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/demo.min.css') }}">

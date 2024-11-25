@@ -5,6 +5,9 @@
 
 @section('content')
 
+<title>Candidate Information</title>
+
+
 <div class="page-body">
     <div class="container">
         <div class="col-sm-6 d-print-none mb-2">
@@ -202,15 +205,15 @@
                                     </div>
                                     <div class="card-body">
                                         <ul class="list-unstyled">
-                                            <li class="d-flex align-items-center">
+                                            <li class="d-flex flex-wrap gap-2">
                                                 @foreach(json_decode($application->skills) as $skill)
-                                                <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
+                                                    <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
                                                 @endforeach
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                @endif
+                                @endif                                
 
                                 @if($application->is_parsed === 1)
                                 <!-- Additional Information Card -->

@@ -155,7 +155,7 @@
                     </div>
                 </li>
                 <div class="hr-text">Candidate</div>
-                <li class="nav-item @if (request()->is('candidates')) active dropdown @endif">
+                <li class="nav-item  @if (Route::currentRouteName() == 'candidate.index') active dropdown @endif">
                     <a class="nav-link" href="{{ route('candidate.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -176,7 +176,7 @@
                     </a>
                 </li>
                 <div class="hr-text">OTHERS</div>
-                <li class="nav-item @if (request()->is('activities'))  @endif">
+                <li class="nav-item @if (Route::currentRouteName() == 'activities.index') active dropdown @endif">
                     <a class="nav-link" href="{{ route('activities.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -192,7 +192,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if (request()->is('feedback'))  @endif">
+                <li class="nav-item @if (Route::currentRouteName() == 'activities.index') active dropdown @endif">
                     <a class="nav-link" href="{{ route('feedback.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
