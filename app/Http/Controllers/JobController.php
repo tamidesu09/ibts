@@ -30,12 +30,18 @@ class JobController extends Controller
         if (auth()->user()->user_type != 0) {
             abort(404);
         }
+
         $validatedData = $request->validated();
 
         if (!empty($validatedData['requirements'])) {
             $validatedData['requirements'] = json_encode(
                 array_map('trim', explode(',', $validatedData['requirements']))
             );
+        }
+
+        if ($request->has('questions') && !empty($request->questions)) {
+            $questions = $request->input('questions');
+            $validatedData['questions'] = json_encode($questions);
         }
 
         Job::create($validatedData);
@@ -58,8 +64,9 @@ class JobController extends Controller
         }
         $job = Job::findOrFail($job_id); // Retrieves the job by ID or throws a 404 error if not found
         $job->requirements = implode(', ', json_decode($job->requirements, true));
-        
-        return view('jobs.edit', compact('job')); // Pass the job data to the edit view
+        $questions = !empty($job->questions) ? json_decode($job->questions, true) : [];
+
+        return view('jobs.edit', compact('job', 'questions')); // Pass the job data to the edit view
     }
 
     public function update(JobsUpdateRequest $request, $job_id)
@@ -74,6 +81,12 @@ class JobController extends Controller
             $validatedData['requirements'] = json_encode(
                 array_map('trim', explode(',', $validatedData['requirements']))
             );
+        }
+
+        // Handle questions
+        if ($request->has('questions') && !empty($request->questions)) {
+            $questions = $request->input('questions');
+            $validatedData['questions'] = json_encode($questions); // Encode as JSON
         }
 
         // Find the job by ID

@@ -34,8 +34,8 @@
     @endforeach
 
     <div>
-        <input type="text" name="job_id" value="{{$job->id}}">
-        <input type="text" name="application_id" value="{{$application_id}}">
+        <input type="hidden" name="job_id" value="{{$job->id}}">
+        <input type="hidden" name="application_id" value="{{$application_id}}">
     </div>
 
     <button type="submit">Submit Answers</button>

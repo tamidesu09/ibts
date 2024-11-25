@@ -134,6 +134,20 @@
                         @enderror
                     </div>
 
+                    <button type="button" class="btn btn-primary mb-3" onclick="addQuestion()">Add Question</button>
+
+                    <div id="questions-container">
+                        <!-- First input field is pre-rendered -->
+                        <div class="form-group row mb-2" id="question-1">
+                            <div class="col-md-10">
+                                <input type="text" name="questions[]" class="form-control" placeholder="Enter question">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-1')">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <!-- Save Button -->
                     <button type="submit" class="btn btn-dark float-end">Save Job</button>
@@ -168,6 +182,33 @@
         }
         tinyMCE.init(options);
     });
+</script>
+
+<script>
+    let questionCount = 1;
+
+    // Function to add a new question input field
+    function addQuestion() {
+        questionCount++;
+
+        const newQuestion = `
+                <div class="form-group row mb-2" id="question-${questionCount}">
+                    <div class="col-md-10">
+                        <input type="text" name="questions[]" class="form-control" placeholder="Enter question">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-${questionCount}')">Remove</button>
+                    </div>
+                </div>
+            `;
+
+        $('#questions-container').append(newQuestion);
+    }
+
+    // Function to remove a question input field
+    function removeQuestion(id) {
+        $('#' + id).remove();
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>

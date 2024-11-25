@@ -98,6 +98,19 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <button type="button" class="btn btn-primary mb-3" onclick="addQuestion()">Add Question</button>
+                    <div id="questions-container">
+                        @foreach ($questions as $index => $question)
+                        <div class="form-group row mb-2" id="question-{{ $index + 1 }}">
+                            <div class="col-md-10">
+                                <input type="text" name="questions[]" class="form-control" placeholder="Enter question" value="{{ old('questions.' . $index, $question) }}">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-{{ $index + 1 }}')">Remove</button>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
 
                     <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#confirmModal">
                         Update Job Listing
@@ -169,5 +182,32 @@
             document.getElementById("jobUpdateForm").submit();
         });
     });
+</script>
+
+<script>
+    let questionCount = "{{ count($questions) }}"; // Initialize with existing question count
+
+    // Function to add a new question input field
+    function addQuestion() {
+        questionCount++;
+
+        const newQuestion = `
+                <div class="form-group row mb-2" id="question-${questionCount}">
+                    <div class="col-md-10">
+                        <input type="text" name="questions[]" class="form-control" placeholder="Enter question">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-${questionCount}')">Remove</button>
+                    </div>
+                </div>
+            `;
+
+        $('#questions-container').append(newQuestion);
+    }
+
+    // Function to remove a question input field
+    function removeQuestion(id) {
+        $('#' + id).remove();
+    }
 </script>
 @endsection
