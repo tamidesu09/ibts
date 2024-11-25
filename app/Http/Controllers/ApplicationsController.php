@@ -155,7 +155,7 @@ class ApplicationsController extends Controller
     {
         $application = Applications::findOrFail($application_id);
 
-        if (auth()->user()->user_type != 1) {
+        if (auth()->user()->user_type != 1 || $application->status != 'Under Review') {
             abort(404);
         }
 
