@@ -36,8 +36,10 @@
                                         <h4>
                                             <a href="{{route('jobs.show', $application->job_id)}}"> {{$application->job->title}}</a>
                                             <br>
-                                            @if($application->status == 'Under Review')
-                                            <a class="text-warning" href="{{route('applicants.showEvaluation', $application->job_id)}}">Answer Evaluation</a>
+                                            @if($application->status == 'Under Review' && empty($application->answers))
+                                            <a class="text-warning" href="{{route('applicants.showEvaluation', [$application->id, $application->job_id])}}">Answer Evaluation</a>
+                                            @elseif($application->status == 'Under Review' && !empty($application->answers))
+                                            <h1 class="text-danger">already answered</h1>
                                             @endif
                                         </h4>
                                     </div>

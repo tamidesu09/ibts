@@ -149,8 +149,10 @@ class ApplicationsController extends Controller
         return view('status', compact('job_applications', 'activities'));
     }
 
-    public function showEvaluation($job_id)
+    public function showEvaluation($application_id, $job_id)
     {
+        $application = Applications::findOrFail($application_id);
+
         if (auth()->user()->user_type != 1) {
             abort(404);
         }
@@ -159,6 +161,6 @@ class ApplicationsController extends Controller
 
         $questions = json_decode($job->questions);  // Assuming JSON column
 
-        return view('evaluation', compact('job', 'questions'));
+        return view('evaluation', compact('job', 'application_id', 'application', 'questions'));
     }
 }

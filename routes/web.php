@@ -82,7 +82,7 @@ Route::get('/chats', function () {
 
 
 Route::get('job_applications', [ApplicationsController::class, 'getJobApplications'])->middleware(['auth', 'verified'])->name('applicants.getJobApplications');
-Route::get('evaluation/{job_id}', [ApplicationsController::class, 'showEvaluation'])->middleware(['auth', 'verified'])->name('applicants.showEvaluation');
+Route::get('evaluation/{application_id}/{job_id}', [ApplicationsController::class, 'showEvaluation'])->middleware(['auth', 'verified'])->name('applicants.showEvaluation');
 Route::post('evaluate', [EvaluationController::class, 'evaluate'])->middleware(['auth', 'verified'])->name('applicants.evaluate');
 
 

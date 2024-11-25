@@ -16,7 +16,9 @@ class Applications extends Model
         'sex',           // Sex (Optional)
         'cv_path',       // Attach Your CV (Path to stored file)
         'job_id',         // Job ID foreign key
-        'user_id'
+        'user_id',
+        'answers',
+        'correct_answers'
     ];
 
 

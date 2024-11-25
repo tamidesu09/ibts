@@ -20,6 +20,8 @@ class CreateApplicationsTable extends Migration
             $table->json('skills')->nullable();
             $table->json('educations')->nullable();
             $table->json('experiences')->nullable();
+            $table->json('answers')->nullable();
+            $table->smallInteger('correct_answers')->default(0);
             $table->boolean('is_parsed')->default(false);
             $table->foreignId('user_id')->constrained();
         });
