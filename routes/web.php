@@ -9,6 +9,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
+
 
 
 
@@ -72,6 +74,10 @@ Route::get('/feedbacks', function () {
     return view('feedback.index'); // candi_info.blade.php
 })->name('feedback.index');
 
+Route::get('/chats', function () {
+    return view('chats'); // candi_info.blade.php
+})->name('chats.index');
+
 
 Route::get('job_applications', [ApplicationsController::class, 'getJobApplications'])->middleware(['auth', 'verified'])->name('applicants.getJobApplications');
 
@@ -115,3 +121,5 @@ Route::get('/candidate/{applicationId}', [NotesController::class, 'show'])->name
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
 Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
 Route::post('/activities/store', [ActivityController::class, 'store'])->name('activities.store');
+
+Route::post('/chat', [ChatController::class, 'chat'])->name('gpt.chat');

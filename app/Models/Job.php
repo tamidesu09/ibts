@@ -22,7 +22,8 @@ class Job extends Model
         'description',
         'hours_start',
         'hours_end',
-        'requirements'
+        'requirements',
+        'questions'
     ];
 
     public function scopeGetAllJobs(Builder $builder)
