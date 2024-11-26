@@ -63,10 +63,9 @@
                                             <a href="#" class="step-item @if($application->status == 'Interview Schedule') active @endif">
                                                 Interview Schedule
                                             </a>
-                                            <span class="step-item @if($application->status == 'Offer') active @endif">
-                                                Offer
+                                            <span class="step-item @if($application->status == 'Accepted') active @endif">
+                                                Onboarding
                                             </span>
-
                                         </div>
                                     </div>
                                 </div>

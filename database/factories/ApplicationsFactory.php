@@ -75,7 +75,7 @@ class ApplicationsFactory extends Factory
             'user_id' => $user->id,
             'job_id' => $job->id,
             'is_parsed' => fake()->randomElement($array = array(1)),
-            'status' => fake()->randomElement($array = array('Application Received', 'Screen', 'Under Review', 'Interview Schedule', 'Offer')),
+            'status' => fake()->randomElement($array = array('Application Received', 'Screen', 'Under Review', 'Interview Schedule', 'Accepted', 'Rejected')),
             'skills' => json_encode($selectedSkills),
             'correct_answers' => fake()->randomDigit()
         ];

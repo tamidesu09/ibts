@@ -97,7 +97,7 @@ class ApplicationsController extends Controller
         $application = Applications::findOrFail($application_id);
 
         $request->validate([
-            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Offer',
+            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Accepted,Rejected',
             'correct_answers' => 'required|numeric'
         ]);
 

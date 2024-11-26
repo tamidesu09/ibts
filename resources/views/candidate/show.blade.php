@@ -402,13 +402,33 @@
                                     <option value="Interview Schedule" @selected(old('appstatus', $application->status) == 'Interview Schedule')>
                                         Interview Schedule
                                     </option>
-                                    <option value="Offer" @selected(old('appstatus', $application->status) == 'Offer')>
-                                        Offer
+                                    <option value="Accepted" @selected(old('appstatus', $application->status) == 'Accepted')>
+                                        Accepted
+                                    </option>
+                                    <option value="Rejected" @selected(old('appstatus', $application->status) == 'Rejected')>
+                                        Rejected
                                     </option>
                                 </select>
                                 @error('appstatus')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
+                                <div class="steps my-5">
+                                    <a href="#" class="step-item @if($application->status == 'Application Received') active @endif">
+                                        Application Received
+                                    </a>
+                                    <a href="#" class="step-item @if($application->status == 'Screen') active @endif">
+                                        Screen
+                                    </a>
+                                    <a href="#" class="step-item @if($application->status == 'Under Review') active @endif">
+                                        Under Review
+                                    </a>
+                                    <a href="#" class="step-item @if($application->status == 'Interview Schedule') active @endif">
+                                        Interview Schedule
+                                    </a>
+                                    <span class="step-item @if($application->status == 'Accepted') active @endif">
+                                        Onboarding
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="mb-3">
