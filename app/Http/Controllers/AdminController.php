@@ -156,7 +156,7 @@ class AdminController extends Controller
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
                         'application_id' => $user->application_id, // Include the application ID here
-                        'matched_skill_percentage' => $matchedSkillPercentage . '%', // Add matched skill percentage
+                        'matched_skill_percentage' => $matchedSkillPercentage,
                         'correct_answers' => $correctAnswers, // Append the correct_answers column here
                     ];
                 })->toArray(),

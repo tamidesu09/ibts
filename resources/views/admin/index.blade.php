@@ -167,10 +167,12 @@
                                                 <ul class="list-group">
                                                     @php
                                                     // Sort users by matched_skill_percentage in descending order
-                                                    $sortedUsers = collect($jobData['users'])->sortByDesc('matched_skill_percentage')->toArray();
+                                                    $sortedUsers = collect($jobData['users'])
+                                                    ->sortByDesc(function ($user) {
+                                                    return [$user['matched_skill_percentage'], $user['correct_answers']];
+                                                    })
+                                                    ->toArray();
 
-                                                    @dd($sortedUsers);
-                                                    
                                                     $topUsers = array_slice($sortedUsers, 0, 3); // Get top 3 users
                                                     @endphp
 
@@ -194,7 +196,7 @@
                                                         <span class="d-flex align-items-center">
                                                             @if ($index === 0)
                                                             @endif
-                                                            <span class="badge bg-info text-dark">Matched: {{ $user['matched_skill_percentage'] }}</span>
+                                                            <span class="badge bg-info text-dark">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
                                                         </span>
                                                         <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
                                                     </li>
@@ -211,7 +213,7 @@
                                                     class="d-block p-3 rounded shadow-sm text-decoration-none"
                                                     style="background-color: #f9f9f9; transition: transform 0.2s, box-shadow 0.2s;">
                                                     <strong class="text-dark">{{ $user['name'] }}</strong><br>
-                                                    <span class="text-muted">Matched Skills: {{ $user['matched_skill_percentage'] }}</span><br>
+                                                    <span class="text-muted">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span><br>
                                                     <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
                                                     <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
                                                 </a>
