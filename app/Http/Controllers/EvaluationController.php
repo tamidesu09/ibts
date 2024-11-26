@@ -33,15 +33,20 @@ class EvaluationController extends Controller
         $response = $this->callOpenAIForEvaluation($messages);
 
 
+
         // Get the result from the response
         $result = $response['choices'][0]['message']['content'];
+
+
 
         $decodeResults = json_decode($result, true);
 
         $correctAnswers = $decodeResults['correct_answers'];
 
-        $application->correct_answers = $correctAnswers;
+        $analysis = $decodeResults['detailed_analysis'];
 
+        $application->correct_answers = $correctAnswers;
+        $application->analysis = $analysis;
         $application->save();
         // Return the result in the expected format (e.g., number of correct answers)
         return redirect()->back()->with('success', 'Thank you for submitting your answers. Your answer will be evaluated');
@@ -69,7 +74,7 @@ class EvaluationController extends Controller
         // Add a prompt to explicitly ask for the count of correct answers
         $messages[] = [
             'role' => 'user',
-            'content' => "Based on the answers provided, please count the number of correct answers and return it in the format: {\"correct_answers\": X}"
+            'content' => "Based on the answers provided, please count the number of correct answers and return it in the format. Also, create a very detailed analysis or insight about the answers provided by the user: {'correct_answers': X, 'detailed_analysis': X}"
         ];
 
         return $messages;
@@ -83,7 +88,7 @@ class EvaluationController extends Controller
         ])->post('https://api.openai.com/v1/chat/completions', [
             'model' => 'gpt-3.5-turbo', // You can use gpt-3.5-turbo or another model
             'messages' => $messages,
-            'max_tokens' => 1000, // Limit the number of tokens (optional)
+            'max_tokens' => 2500, // Limit the number of tokens (optional)
         ]);
 
         return $response->json();

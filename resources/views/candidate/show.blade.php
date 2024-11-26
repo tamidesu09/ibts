@@ -482,6 +482,15 @@
                                     <h5 class="text-secondary">{{ $application->correct_answers }}</h5>
                                 </div>
                             </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header bg-success text-white">
+                                    <h2 class="mb-0">AI Insights/Analysis</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="text-secondary">{{ $application->analysis }}</h5>
+                                </div>
+                            </div>
                         </div>
                         @endif
 

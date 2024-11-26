@@ -18,7 +18,8 @@ class Applications extends Model
         'job_id',         // Job ID foreign key
         'user_id',
         'answers',
-        'correct_answers'
+        'correct_answers',
+        'analysis'
     ];
 
 
