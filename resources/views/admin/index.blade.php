@@ -168,6 +168,9 @@
                                                     @php
                                                     // Sort users by matched_skill_percentage in descending order
                                                     $sortedUsers = collect($jobData['users'])->sortByDesc('matched_skill_percentage')->toArray();
+
+                                                    @dd($sortedUsers);
+                                                    
                                                     $topUsers = array_slice($sortedUsers, 0, 3); // Get top 3 users
                                                     @endphp
 
