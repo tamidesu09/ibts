@@ -423,21 +423,48 @@
                             <button type="submit" class="btn btn-primary">Update</button>
 
                         </form>
+
+                        <div class="hr-text hr-text-right text-blue">Evaluation Test Section</div>
+
                         @if(!empty($application->answers))
-                        <hr>
-                        <h1>Job Questions</h1>
-                        @foreach(json_decode($application->job->questions) as $question)
-                        <h3> {{$question}} </h3>
-                        @endforeach
-                        <hr>
-                        <h1>Candidate Answers</h1>
-                        @foreach(json_decode($application->answers) as $answer)
-                        <h3> {{$answer}} </h3>
-                        @endforeach
-                        <hr>
-                        <h1>Correct Answers</h1>
-                        <h3> {{$application->correct_answers}} </h3>
+                        <div class="container my-4">
+                            <div class="card">
+                                <div class="card-header bg-blue text-white">
+                                    <h2 class="mb-0">Job Questions</h2>
+                                </div>
+                                <div class="card-body">
+                                    @foreach(json_decode($application->job->questions) as $question)
+                                    <div class="mb-3">
+                                        <h5 class="text-secondary">{{ $question }}</h5>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header bg-azure text-white">
+                                    <h2 class="mb-0">Candidate Answers</h2>
+                                </div>
+                                <div class="card-body">
+                                    @foreach(json_decode($application->answers) as $answer)
+                                    <div class="mb-3">
+                                        <h5 class="text-secondary">{{ $answer }}</h5>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header bg-indigo text-white">
+                                    <h2 class="mb-0">Correct Answers</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="text-secondary">{{ $application->correct_answers }}</h5>
+                                </div>
+                            </div>
+                        </div>
                         @endif
+
                     </div>
                 </div>
             </div>
