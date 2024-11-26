@@ -29,7 +29,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ],
 
             'dob' => [
-                'required',
+                'nullable',
                 'date'
             ]
 
@@ -42,7 +42,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'dob' => $input['dob']
             ])->save();
         }
     }
