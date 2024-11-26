@@ -26,8 +26,5 @@ class DatabaseSeeder extends Seeder
         \App\Models\Feedback::factory(50)->create();
         \App\Models\Notes::factory(50)->create();
         \App\Models\Activity::factory(50)->create();
-
-
-
     }
 }

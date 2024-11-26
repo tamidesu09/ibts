@@ -29,17 +29,23 @@
                         <h3>My Job Applications ({{$job_applications->count()}})</h3>
 
                         @foreach($job_applications as $application)
-                        <div class="card mb-5">
+                        <div class="card border-0 shadow mb-3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h4>
-                                            <a href="{{route('jobs.show', $application->job_id)}}"> {{$application->job->title}}</a>
+                                            <a href="{{route('jobs.show', $application->job_id)}}" class="fw-bold text-blue"> {{$application->job->title}}</a>
                                             <br>
                                             @if($application->status == 'Under Review' && empty($application->answers))
-                                            <a class="text-warning" href="{{route('applicants.showEvaluation', [$application->id, $application->job_id])}}">Answer Evaluation</a>
+                                            <a class="bg-yellow-lt" href="{{route('applicants.showEvaluation', [$application->id, $application->job_id])}}"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-exclamation-circle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-5 11.66a1 1 0 0 0 -1 1v.01a1 1 0 0 0 2 0v-.01a1 1 0 0 0 -1 -1m0 -7a1 1 0 0 0 -1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0 -1 -1" />
+                                                    </svg></span> Evaluation</a>
                                             @elseif($application->status == 'Under Review' && !empty($application->answers))
-                                            <h1 class="text-danger">already answered</h1>
+                                            <h1 class="badge bg-lime-lt"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M5 12l5 5l10 -10" />
+                                                    </svg></span> You have answered the Evaluation Test for this Job Application.</h1>
                                             @endif
                                         </h4>
                                     </div>

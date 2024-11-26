@@ -23,57 +23,46 @@
                 Back
             </a>
         </div>
-        <div class="d-flex align-items-center">
-            <span class="avatar avatar-xl">
-                <img src="{{ asset('img/avatar.png') }}" alt="Recruit Image">
-            </span>
-            <div class="ms-3">
-                <!-- Name Section -->
+
+
+        <div class="card border-0 shadow-sm col-md-6 mt-5">
+            <div class="card-body">
                 <div class="d-flex align-items-center">
-                    <span class="me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-user-check">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-                            <path d="M15 19l2 2l4 -4" />
-                        </svg>
+
+                    <span class="avatar avatar-xl">
+                        <img src="{{ asset('img/avatar.png') }}" alt="Recruit Image">
                     </span>
-                    <h2 class="mb-0">{{ $application->complete_name }}</h2>
+
+                    <div class="ms-3">
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0 text-primary">{{ $application->complete_name }}</h2>
+                            <hr>
+                        </div>
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="me-2 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-mail">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z" />
+                                    <path d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z" />
+                                </svg>
+                            </span>
+                            <h4 class="text-muted mb-0">{{ $application->email }}</h4>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-briefcase-2">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 2a3 3 0 0 1 3 3v1h2a3 3 0 0 1 3 3v9a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h2v-1a3 3 0 0 1 3 -3zm0 2h-4a1 1 0 0 0 -1 1v1h6v-1a1 1 0 0 0 -1 -1" />
+                                </svg>
+                            </span>
+                            <h4 class="text-muted mb-0">{{ $application->job->title }}</h4>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Email Section -->
-                <div class="d-flex align-items-center mt-2">
-                    <span class="me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-mail">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-                            <path d="M3 7l9 6l9 -6" />
-                        </svg>
-                    </span>
-                    <h4 class="text-muted mb-0">{{ $application->email }}</h4>
-
-
-                </div>
-
-                <div class="d-flex align-items-center">
-                    <span class="me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z" />
-                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-                        </svg>
-                    </span>
-                    <h4 class="text-muted mb-0">{{ $application->job->title }}</h4>
-
-
-                </div>
-
             </div>
         </div>
 
-
-
-        <div class="card mt-3">
+        <div class="card border-0 mt-5">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist" data-bs-toggle="tabs">
                     <li class="nav-item">
@@ -116,47 +105,10 @@
                                                     <td>Candidate Full Name</td>
                                                     <td class="text-secondary">{{ $application->complete_name }}</td>
                                                 </tr>
-                                                <!-- <tr>
-                                                    <td>Candidate First Name</td>
-                                                    <td class="text-secondary">{{ $application->first_name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Candidate Last Name</td>
-                                                    <td class="text-secondary">{{ $application->last_name }}</td>
-                                                </tr> -->
                                                 <tr>
                                                     <td>Sex</td>
                                                     <td class="text-secondary">{{ $application->sex }}</td>
                                                 </tr>
-                                                <!-- <tr>
-                                                    <td>Diploma</td>
-                                                    <td class="text-secondary">{{ $application->diploma }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>University</td>
-                                                    <td class="text-secondary">{{ $application->university }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Current Company</td>
-                                                    <td class="text-secondary">{{ $application->current_company }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Current Position</td>
-                                                    <td class="text-secondary">{{ $application->current_position }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Candidate Location</td>
-                                                    <td class="text-secondary">{{ $application->location }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Birthdate</td>
-                                                    <td class="text-secondary">{{ $application->birthdate }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Candidate Address</td>
-                                                    <td class="text-secondary">{{ $application->address }}</td>
-                                                </tr> -->
                                                 <tr>
                                                     <td>Candidate Email Address</td>
                                                     <td class="text-secondary"><span

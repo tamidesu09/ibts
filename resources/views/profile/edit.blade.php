@@ -3,6 +3,9 @@
 
 @section('content')
 @if (session('status') == 'profile-information-updated')
+
+<title>Edit Profile</title>
+
 <script>
     Swal.fire({
         icon: 'success',

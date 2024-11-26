@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+<title>Login</title>
 <div class="page page-center">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+<title>Register</title>
 <div class="page page-center">
 
     <div class="container container-tight py-4">

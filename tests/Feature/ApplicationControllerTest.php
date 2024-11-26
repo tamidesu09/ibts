@@ -98,26 +98,26 @@ class ApplicationControllerTest extends TestCase
     }
 
     /** @test */
-public function store_returns_error_for_invalid_file_type()
-{
-    // Create a user with user_type = 1
-    $user = User::factory()->create(['user_type' => 1]);
+    public function store_returns_error_for_invalid_file_type()
+    {
+        // Create a user with user_type = 1
+        $user = User::factory()->create(['user_type' => 1]);
 
-    // Simulate authentication
-    $this->actingAs($user);
+        // Simulate authentication
+        $this->actingAs($user);
 
-    // Prepare invalid data: invalid sex value
-    $data = [
-        'job_id' => 1,
-        'phone_number' => '1234567890',
-        'sex' => 'male',  // Invalid sex value
-        'cv' => UploadedFile::fake()->create('cv.docx', 1024),  // Invalid CV
-    ];
+        // Prepare invalid data: invalid sex value
+        $data = [
+            'job_id' => 1,
+            'phone_number' => '1234567890',
+            'sex' => 'male',  // Invalid sex value
+            'cv' => UploadedFile::fake()->create('cv.docx', 1024),  // Invalid CV
+        ];
 
-    // Visit the store route (POST request)
-    $response = $this->post(route('applications.store'), $data);
+        // Visit the store route (POST request)
+        $response = $this->post(route('applications.store'), $data);
 
-    // Assert that the response contains validation errors for the sex field
-    $response->assertSessionHasErrors('cv');
-}
+        // Assert that the response contains validation errors for the sex field
+        $response->assertSessionHasErrors('cv');
+    }
 }

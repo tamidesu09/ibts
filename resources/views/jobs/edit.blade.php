@@ -2,6 +2,8 @@
 
 @section('title', 'Edit Job Listing')
 @section('content')
+
+<title>Edit Job</title>
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
@@ -98,23 +100,43 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="button" class="btn btn-primary mb-3" onclick="addQuestion()">Add Question</button>
-                    <div id="questions-container">
-                        @foreach ($questions as $index => $question)
-                        <div class="form-group row mb-2" id="question-{{ $index + 1 }}">
-                            <div class="col-md-10">
-                                <input type="text" name="questions[]" class="form-control" placeholder="Enter question" value="{{ old('questions.' . $index, $question) }}">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-{{ $index + 1 }}')">Remove</button>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
 
-                    <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                        Update Job Listing
-                    </button>
+                    <div class="hr-text text-azure fw-bold">Evaluation Test Section</div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-dark">
+                            <h3 class="card-title text-light">Evaluation Tests</h3>
+                        </div>
+                        <div class="card-body">
+                            <button type="button" class="btn btn-primary mb-3" onclick="addQuestion()"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-plus">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4.929 4.929a10 10 0 1 1 14.141 14.141a10 10 0 0 1 -14.14 -14.14zm8.071 4.071a1 1 0 1 0 -2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0 -2h-2v-2z" />
+                                    </svg></span>Add Question</button>
+                            <div id="questions-container">
+                                @foreach ($questions as $index => $question)
+                                <div class="form-group row mb-2" id="question-{{ $index + 1 }}">
+                                    <div class="col-md-10">
+                                        <input type="text" name="questions[]" class="form-control" placeholder="Enter question" value="{{ old('questions.' . $index, $question) }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove-btn" onclick="removeQuestion('question-{{ $index + 1 }}')">&nbsp&nbsp<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg></span>Remove</button>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <button type="button" class="btn btn-dark float-end mt-3" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                                Update Job Listing
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
