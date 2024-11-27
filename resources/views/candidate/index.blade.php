@@ -13,39 +13,78 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h1 class="fw-bold mb-5">Candidates Dashboard</h1>
-                <div class="row">
-                    <!-- Card layout for candidate statistics -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-status-start bg-azure"></div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h4>NUMBER OF CANDIDATES</h4>
-                                    <h3 class="text-primary">{{ $applicationsCount }}</h3>
+                <div class="container">
+                    <div class="row g-4">
+                        <!-- Left Column -->
+                        <div class="col-md-4">
+                            <!-- Applications Count -->
+                            <div class="card mb-4">
+                                <div class="card-status-start bg-azure"></div>
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4>NUMBER OF CANDIDATES</h4>
+                                        <h3 class="text-primary">{{ $applicationsCount }}</h3>
+                                    </div>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="large-icon text-azure" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+                                            <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
+                                        </svg>
+                                    </div>
                                 </div>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="large-icon text-muted" width="40"
-                                        height="40" viewBox="0 0 24 24" fill="currentColor"
-                                        class="icon icon-tabler icons-tabler-filled icon-tabler-user">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-                                        <path
-                                            d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
-                                    </svg>
+                            </div>
+
+                            <!-- # of Jobs Per Date -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold"># of Applications per Date</h5>
+                                    <div id="chart-demo-bar" class="chart-lg"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="text-center mb-4">Application Status Summary</h4>
+                                    <div class="row g-4">
+                                        @foreach($statuses as $status)
+                                        <div class="col-md-6">
+                                            <div class="card border-0 shadow-sm">
+                                                <div class="card-status-start bg-azure"></div>
+                                                <div class="card-body d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h4 class="card-title mb-1 fw-bold" style="color: #343a40;">{{ $status->status }}</h4>
+                                                        <h3 class="text-primary">{{ $status->count }}</h3>
+                                                    </div>
+                                                    <div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class=" large-icon text-azure" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path stroke=" none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M18 3a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12zm-2.293 6.293a1 1 0 0 0 -1.414 0l-2.293 2.292l-1.293 -1.292a1 1 0 0 0 -1.414 0l-3 3a1 1 0 0 0 0 1.414l.094 .083a1 1 0 0 0 1.32 -.083l2.293 -2.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -.083l2.293 -2.292l1.293 1.292a1 1 0 0 0 1.414 -1.414l-2 -2z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Page pre-title and title -->
-                <div class="page-pretitle mt-5">
-                    Candidates
-                </div>
-                <h2 class="page-title">
-                    Candidate List
-                </h2>
             </div>
         </div>
+
+        <!-- Page pre-title and title -->
+        <div class="page-pretitle mt-5">
+            Candidates
+        </div>
+        <h2 class="page-title">
+            Candidate List
+        </h2>
     </div>
 </div>
 
@@ -176,9 +215,89 @@
     </div>
 </div>
 
-
 @include('layouts.datatable')
 
+
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/apexcharts/dist/apexcharts.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-bar'), {
+            chart: {
+                type: "bar",
+                fontFamily: 'inherit',
+                height: 240,
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: false,
+                },
+                animations: {
+                    enabled: false
+                },
+                stacked: true, // Stacked bar chart
+            },
+            plotOptions: {
+                bar: {
+                    barHeight: '50%',
+                    horizontal: false, // Make it horizontal
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: "Applications Count",
+                data: @json($counts), // Use the counts from the controller
+            }],
+            tooltip: {
+                theme: 'dark'
+            },
+            grid: {
+                padding: {
+                    top: -20,
+                    right: 0,
+                    left: -4,
+                    bottom: -4
+                },
+                strokeDashArray: 4,
+            },
+            xaxis: {
+                labels: {
+                    padding: 0,
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: false,
+                },
+                categories: @json($dates), // Use the dates from the controller
+            },
+            yaxis: {
+                labels: {
+                    padding: 4
+                },
+            },
+            colors: [tabler.getColor("primary")], // Set color for the bars
+            legend: {
+                show: true,
+                position: 'bottom',
+                offsetY: 12,
+                markers: {
+                    width: 10,
+                    height: 10,
+                    radius: 100,
+                },
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 8
+                },
+            },
+        })).render();
+    });
+</script>
 
 <script>
     new DataTable('#candidates-table');

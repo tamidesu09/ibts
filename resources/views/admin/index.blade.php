@@ -71,7 +71,6 @@
 
 
                 <div class="tab-pane active show" id="tabs-charts">
-                    <h1 class="text-center mb-4">Charts and Graphs</h1>
                     <div class="container my-5">
                         <div class="row g-4">
                             <!-- GENDERS -->
@@ -153,17 +152,23 @@
                             <div class="col-lg-6">
                                 <div class="card shadow border-0">
                                     <div class="card-header card-header bg-dark text-white">
-                                        <h3 class="card-title mb-0 d-flex justify-content-between align-items-center">
-                                            {{ $jobData['job_name'] }}
-                                            <span class="badge bg-azure text-dark" data-bs-toggle="tooltip"
-                                                data-bs-placement="top"
-                                                title="Total Applications">{{ $jobData['applications'] }} applications</span>
-                                        </h3>
+                                        <div class="d-flex justify-content-between align-items-center w-100">
+                                            <h3 class="card-title mb-0">
+                                                {{ $jobData['job_name'] }}
+                                            </h3>
+                                            <div class="text-end">
+                                                <span class="badge bg-azure text-dark" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="Total Applications">
+                                                    {{ $jobData['applications'] }} applications
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row g-3 mb-4">
                                             <div class="col-12">
-                                                <h5 class="text-center text-azure">Top Ranking Candidates</h5>
+                                                <h5 class="text-center text-azure card card-header fw-bold">Top Ranking Candidates</h5>
                                                 <ul class="list-group">
                                                     @php
                                                     // Sort users by matched_skill_percentage in descending order
@@ -197,8 +202,8 @@
                                                             @if ($index === 0)
                                                             <!-- Add any specific content or functionality here if needed -->
                                                             @endif
-                                                            <span class="badge badge-outline text-blue mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
-                                                            <span class="badge badge-outline text-lime">Correct Answers: {{$user['correct_answers']}}</span>
+                                                            <span class="badge bg-azure mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
+                                                            <span class="badge bg-lime">Correct Answers: {{$user['correct_answers']}}</span>
                                                         </div>
                                                     </li>
                                                     @endforeach
@@ -234,6 +239,9 @@
 
                 <div class="tab-pane" id="tabs-status-count">
                     <!-- APPLICATION STATUS -->
+                    <center>
+                        <h1>Summary of Application Status</h1>
+                    </center>
                     <div class="row g-4 mb-5">
                         @foreach($statuses as $status)
                         <div class="col-sm-3">
@@ -250,7 +258,7 @@
                 </div>
 
                 <div class="tab-pane" id="tabs-count">
-                    <h1 class="text-center mb-5 text-uppercase font-weight-bold">Resume Parsed, Feedbacks, and Notes Count</h1>
+                    <h1 class="text-center mb-5 font-weight-bold">Resume Parsed, Feedbacks, and Notes Count</h1>
 
                     <!-- PARSED RESUME COUNT, FEEDBACKS COUNT, NOTES COUNT in a single row -->
                     <div class="row g-4 mb-5">
@@ -292,22 +300,21 @@
                 </div>
 
                 <div class="tab-pane" id="tabs-activities-type-count">
-                    <h1 class="text-center mb-5 text-uppercase font-weight-bold">
-                        <!-- APPLICATION STATUS -->
-                        <div class="row g-4 mb-5">
-                            <h1>INDIVIDUAL ACTIVITIES TYPE COUNT</h1>
-                            @foreach($activities as $activity)
-                            <div class="card shadow-sm border-0">
-                                <div class="card">
-                                    <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
-                                    <div class="card-body text-center">
-                                        <h3 class="card-title fw-bold mb-3">{{$activity->type}}</h3>
-                                        <h1 class="text-primary display-4">{{$activity->count}}</p>
-                                    </div>
+                    <h1 class="text-center mb-5 font-weight-bold">Individual Activities Type</h1>
+                    <!-- APPLICATION STATUS -->
+                    <div class="row g-4 mb-5">
+                        @foreach($activities as $activity)
+                        <div class="card shadow-sm border-0">
+                            <div class="card">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title fw-bold mb-3">{{$activity->type}}</h3>
+                                    <h1 class="text-primary display-4">{{$activity->count}}</p>
                                 </div>
                             </div>
-                            @endforeach
                         </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

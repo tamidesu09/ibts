@@ -9,6 +9,8 @@ use App\Models\Notes;
 use App\Models\User;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -21,7 +23,25 @@ class ApplicationsController extends Controller
         }
         $applications = Applications::all();
         $applicationsCount = Applications::count(); // Get total number of applications
-        return view('candidate.index', compact('applications', 'applicationsCount'));
+
+        // Fetch statuses with their counts (example query, adjust based on your database structure)
+        $statuses = DB::table('applications')
+            ->select('status', DB::raw('COUNT(*) as count'))
+            ->groupBy('status')
+            ->get();
+
+        // Fetch applications grouped by date
+        $dateRange = DB::table('applications')
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        // Prepare data for the chart
+        $dates = $dateRange->pluck('date')->toArray(); // Extract dates
+        $counts = $dateRange->pluck('count')->toArray(); // Extract counts
+
+        return view('candidate.index', compact('applications', 'applicationsCount', 'statuses', 'dates', 'counts'));
     }
 
     public function create()
