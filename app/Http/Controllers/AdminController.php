@@ -125,7 +125,7 @@ class AdminController extends Controller
                 'applications.skills',
                 'applications.correct_answers',  // Include the correct_answers field
                 'jobs.requirements',
-                DB::raw('jsonb_array_length(applications.skills) as skill_count')  // Count JSON array elements
+                DB::raw('json_array_length(applications.skills) as skill_count')  // Count JSON array elements
             )
             // Fetch the job applications
             ->get();
