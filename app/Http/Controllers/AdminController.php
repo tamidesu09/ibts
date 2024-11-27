@@ -65,7 +65,7 @@ class AdminController extends Controller
 
         $parsedCounts = DB::table('applications') // Replace with your table name
             ->select(
-                DB::raw('CASE WHEN is_parsed = 1 THEN "Parsed" ELSE "Not Parsed Yet" END as status'),
+                DB::raw('CASE WHEN is_parsed = TRUE THEN "Parsed" ELSE "Not Parsed Yet" END as status'),
                 DB::raw('count(*) as count')
             )
             ->groupBy('is_parsed') // Group by the custom 'status' name
