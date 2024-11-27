@@ -150,7 +150,7 @@
                             <!-- Right Side: Skills, Additional Information, and Experience -->
                             <div class="col-sm-6 mt-3 mt-sm-0">
                                 <!-- Skills Card -->
-                                @if($application->is_parsed == 1)
+                                @if($application->is_parsed == true)
                                 <div class="card">
                                     <div class="card-header bg-dark">
                                         <h3 class="card-title text-light">Skills</h3>
@@ -167,7 +167,7 @@
                                 </div>
                                 @endif
 
-                                @if($application->is_parsed == 1)
+                                @if($application->is_parsed == true)
                                 <!-- Additional Information Card -->
                                 <div class="card mt-3">
                                     <div class="card-header bg-dark">
@@ -191,7 +191,7 @@
                                 </div>
                                 @endif
 
-                                @if($application->is_parsed == 1)
+                                @if($application->is_parsed == true)
                                 <!-- Experience Card -->
                                 <div class="card mt-3">
                                     <div class="card-header bg-dark">
@@ -218,7 +218,7 @@
                                 </div>
                                 @endif
 
-                                @if($application->is_parsed == 0)
+                                @if($application->is_parsed == false)
                                 <div class="text-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
