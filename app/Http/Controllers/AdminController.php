@@ -96,7 +96,21 @@ class AdminController extends Controller
 
 
 
-        // Fetching applications with users and jobs, sorted by skill count
+        // $jobApplications = DB::table('applications')
+        //     ->join('users', 'applications.user_id', '=', 'users.id')
+        //     ->join('jobs', 'applications.job_id', '=', 'jobs.id')
+        //     ->select(
+        //         'applications.id as application_id',
+        //         'applications.job_id',
+        //         'jobs.title as job_name',
+        //         'users.name as user_name',
+        //         'applications.skills',
+        //         'applications.correct_answers',
+        //         'jobs.requirements',
+        //         DB::raw('JSON_LENGTH(applications.skills) as skill_count')
+        //     )
+        //     ->get();
+
         $jobApplications = DB::table('applications')
             // Join with users table to get user information
             ->join('users', 'applications.user_id', '=', 'users.id')
@@ -111,10 +125,11 @@ class AdminController extends Controller
                 'applications.skills',
                 'applications.correct_answers',  // Include the correct_answers field
                 'jobs.requirements',
-                DB::raw('JSON_LENGTH(applications.skills) as skill_count')
+                DB::raw('jsonb_array_length(applications.skills) as skill_count')  // Count JSON array elements
             )
             // Fetch the job applications
             ->get();
+
 
         // Now, to get the count of applications per job (the number of users who applied for each job)
         $jobApplicationCounts = DB::table('applications')
