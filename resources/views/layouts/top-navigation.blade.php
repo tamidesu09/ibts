@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbar-menu">
       <!-- Centered navigation links -->
       @auth
-      @if(auth()->user()->user_type == 1)
+      @if(auth()->user()->user_type != 0)
       <ul class="navbar-nav mx-auto">
         <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('home') }}">Home</a>
