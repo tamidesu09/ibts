@@ -243,7 +243,7 @@
                     <!-- Additional Tab Contents (Resume, Notes, History) -->
                     <div class="tab-pane" id="tabs-resume">
 
-                        @if($application->is_parsed === 0)
+                        @if($application->is_parsed == false)
                         <button id="parse-resume" class="btn btn-dark mb-3">Parse Resume</button>
                         @endif
                         <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 100vh">
