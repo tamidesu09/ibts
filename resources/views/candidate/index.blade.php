@@ -48,8 +48,8 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="text-center mb-4">Application Status Summary</h4>
-                                    <div class="row g-4">
+                                    <h4 class="text-center">Application Status Summary</h4>
+                                    <div class="row g-4 mb-5">
                                         @foreach($statuses as $status)
                                         <div class="col-md-6">
                                             <div class="card border-0 shadow-sm">
