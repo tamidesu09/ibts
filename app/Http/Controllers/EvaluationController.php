@@ -39,7 +39,7 @@ class EvaluationController extends Controller
 
         $decodeResults = json_decode($result, true);
 
-        return $messages . '       ' . $response . '        ' . $result . '        ' . $decodeResults;
+        return $result;
 
 
 
