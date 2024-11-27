@@ -11,6 +11,9 @@ class AdminController extends Controller
 {
     public function index()
     {
+
+        $databaseDriver = env('DB_CONNECTION');
+
         if (auth()->user()->user_type != 0) {
             abort(404);
         }
@@ -125,7 +128,11 @@ class AdminController extends Controller
                 'applications.skills',
                 'applications.correct_answers',  // Include the correct_answers field
                 'jobs.requirements',
-                DB::raw('json_array_length(applications.skills) as skill_count')  // Count JSON array elements
+                DB::raw(
+                    $databaseDriver === 'mysql'
+                        ? 'JSON_LENGTH(applications.skills) as skill_count'  // MySQL version
+                        : 'json_array_length(applications.skills) as skill_count'  // PostgreSQL version
+                )
             )
             // Fetch the job applications
             ->get();
