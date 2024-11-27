@@ -488,7 +488,12 @@
                                     <h2 class="mb-0">AI Insights/Analysis</h2>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="text-secondary">{{ $application->analysis }}</h5>
+                                    @php
+                                    $analyses = json_decode($application->analysis, true);
+                                    @endphp
+                                    @foreach($analyses as $count => $analysis)
+                                    <h5 class="text-secondary">{{$count}}: {{ $analysis }}</h5>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

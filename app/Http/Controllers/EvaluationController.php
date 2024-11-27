@@ -32,7 +32,7 @@ class EvaluationController extends Controller
         // Call OpenAI API to evaluate the answers
         $response = $this->callOpenAIForEvaluation($messages);
 
-
+        return $response;
 
         // Get the result from the response
         $result = $response['choices'][0]['message']['content'];
