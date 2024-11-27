@@ -147,7 +147,7 @@ class ApplicationsController extends Controller
 
         $application = Applications::findOrFail($request->application_id);
 
-        if ($application->is_parsed === 0) {
+        if ($application->is_parsed == false) {
             $application->skills = $request->skills;
             $application->educations = $request->educations;
             $application->experiences =  $request->experiences;
