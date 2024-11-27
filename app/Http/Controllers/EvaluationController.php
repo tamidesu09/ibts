@@ -37,8 +37,10 @@ class EvaluationController extends Controller
         $result = $response['choices'][0]['message']['content'];
 
 
-
         $decodeResults = json_decode($result, true);
+
+        return $messages . '       ' . $response . '        ' . $result . '        ' . $decodeResults;
+
 
 
         $correctAnswers = $decodeResults['correct_answers'];
