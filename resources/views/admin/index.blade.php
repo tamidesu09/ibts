@@ -193,12 +193,13 @@
                                                                 <small class="text-muted">Skills: {{ $user['skill_count'] }}</small>
                                                             </a>
                                                         </span>
-                                                        <span class="d-flex align-items-center">
+                                                        <div class="d-flex flex-column align-items-start">
                                                             @if ($index === 0)
+                                                            <!-- Add any specific content or functionality here if needed -->
                                                             @endif
-                                                            <span class="badge bg-info text-dark">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
-                                                        </span>
-                                                        <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
+                                                            <span class="badge badge-outline text-blue mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
+                                                            <span class="badge badge-outline text-lime">Correct Answers: {{$user['correct_answers']}}</span>
+                                                        </div>
                                                     </li>
                                                     @endforeach
                                                 </ul>

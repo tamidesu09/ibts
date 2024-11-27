@@ -74,7 +74,7 @@ class EvaluationController extends Controller
         // Add a prompt to explicitly ask for the count of correct answers
         $messages[] = [
             'role' => 'user',
-            'content' => "Based on the answers provided, please count the number of correct answers and return it in the format. Also, create a very detailed analysis or insight about the answers provided by the user: {'correct_answers': X, 'detailed_analysis': X}"
+            'content' => "Based on the answers provided, please count the number of correct answers and return it in the format below. If any of the answers are partially correct or closely related to the correct answer, consider them as correct. Also, provide a detailed analysis or insight about each answer, explaining why it is correct or incorrect and how relevant it is to the expected response: {'correct_answers': X, 'detailed_analysis': Y}. Please ensure you review each answer carefully and make necessary corrections based on the context and relevance."
         ];
 
         return $messages;
