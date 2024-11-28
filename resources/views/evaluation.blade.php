@@ -9,6 +9,7 @@
 
 
 <div class="container mt-5">
+
     @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <div class="d-flex">
@@ -28,6 +29,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+
+    @if (session('failed-evaluation'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="d-flex">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l5 5l10 -10" />
+                </svg>
+            </div>
+            <div class="ms-2">
+                <h4 class="alert-title">Failed</h4>
+                <p class="text-secondary mb-0">{{ session('failed-evaluation') }}</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+
+
+
     <div class="card">
         <div class="card-header text-light bg-dark">
             <h3 class="card-title">Evaluation Test</h3>
