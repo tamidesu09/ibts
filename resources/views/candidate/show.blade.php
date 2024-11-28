@@ -546,31 +546,7 @@
             });
         });
 
-        // $("#parse-resume").on("click", function() {
-        //     const cvPath = "{{ asset($application->cv_path) }}";
-
-        //     const url = 'https://api.apilayer.com/resume_parser/url';
-        //     const params = {
-        //         url: cvPath
-        //     };
-        //     const headers = {
-        //         'apikey': 'EvYEHCEeqjc2IFghCoRNj5UAGDEeChYD',
-        //     };
-
-        //     axios.get(url, {
-        //             headers: headers,
-        //             params: params
-        //         })
-        //         .then(response => {
-        //             console.log("Response:", response.data);
-        //             alert("Resume parsed successfully!");
-        //         })
-        //         .catch(error => {
-        //             console.error("Error:", error);
-        //             alert("An error occurred while parsing the resume.");
-        //         });
-        // });
-
+      
         $("#parse-resume").on("click", async function() {
             const resumeUrl = "{{ asset($application->cv_path) }}";
             const apiUrl = 'https://api.apilayer.com/resume_parser/upload';

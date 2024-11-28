@@ -202,15 +202,12 @@
 
 
                                 <div class="dz-message">
-                                    <span class="dropzone-msg-desc text-muted">*.docs or *.pdf format</span>
+                                    <span class="dropzone-msg-desc text-muted">CV should be in a *.pdf format</span>
                                 </div>
                                 @error('cv')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-
-
-
                             <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
                         </form>
                         @endif
