@@ -315,6 +315,21 @@
                         </div>
                         @endforeach
                     </div>
+
+                    <h1 class="text-center mb-5 font-weight-bold">Announcements Publication Status</h1>
+                    <div class="row g-4 mb-5">
+                        @foreach($announcements as $announcement)
+                        <div class="card shadow-sm border-0">
+                            <div class="card">
+                                <div class="card-status-top" style="height: 5px; background-color: #007bff;"></div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title fw-bold mb-3">{{$announcement->status}}</h3>
+                                    <h1 class="text-primary display-4">{{$announcement->count}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

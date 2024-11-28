@@ -97,6 +97,16 @@ class AdminController extends Controller
             ->groupBy('type')
             ->get();
 
+        $announcements = DB::table('announcements')
+            ->select(DB::raw('
+                COUNT(*) as count, 
+                CASE 
+                    WHEN is_published = 1 THEN "Published" 
+                    WHEN is_published = 0 THEN "Unpublished" 
+                END as status
+            '))
+            ->groupBy('is_published')
+            ->get();
 
 
         // $jobApplications = DB::table('applications')
@@ -195,7 +205,8 @@ class AdminController extends Controller
             'feedbacksCount',
             'notesCount',
             'activities',
-            'results'
+            'results',
+            'announcements'
         ]));
     }
 }
