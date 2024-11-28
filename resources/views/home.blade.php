@@ -72,15 +72,23 @@
         </div>
       </div>
     </div>
-
-    <h1 class="mt-5">Announcements</h1>
-    @foreach($announcements as $announcement)
-    <div class="bg-success p-5 mb-5">
-      {{$announcement->title}}
-      <br>
-      {!!$announcement->body!!}
+  </div>
+  <!-- Announcements Section -->
+  <div class="mt-5">
+    <div class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000">
+      <h2>Latest <span style="color: #163673">Announcements</span></h2>
+      <p>Stay updated with our latest news and updates.</p>
     </div>
-    @endforeach
+    <div class="row g-4">
+      @foreach($announcements as $announcement)
+      <div class="col-12">
+        <div class="bg-light shadow-lg p-4 rounded-lg" data-aos="fade-up" data-aos-duration="1000">
+          <h4 class="text-primary fw-bold">{{ $announcement->title }}</h4>
+          <p class="text-muted">{!! $announcement->body !!}</p>
+        </div>
+      </div>
+      @endforeach
+    </div>
   </div>
 </div>
 
