@@ -64,6 +64,7 @@ class DatabaseSeeder extends Seeder
             'dob' => '2003-01-01',
             'email_verified_at' => now(),
             'user_type' => 0,
+            'is_owner' => true
         ]);
 
         \App\Models\User::factory(10)->create();
@@ -72,5 +73,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Feedback::factory(10)->create();
         \App\Models\Notes::factory()->create();
         \App\Models\Activity::factory(50)->create();
+        \App\Models\Announcement::factory(50)->create();
+
     }
 }

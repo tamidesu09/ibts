@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->date('dob');
             $table->smallInteger('user_type')->default(1);
+            $table->boolean('is_owner')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

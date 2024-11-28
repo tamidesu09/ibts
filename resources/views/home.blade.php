@@ -2,7 +2,7 @@
 
 @section('content')
 
-<title>Home</title>
+@section('title','Home')
 
 
 
@@ -72,8 +72,19 @@
         </div>
       </div>
     </div>
+
+    <h1 class="mt-5">Announcements</h1>
+    @foreach($announcements as $announcement)
+    <div class="bg-success p-5 mb-5">
+      {{$announcement->title}}
+      <br>
+      {!!$announcement->body!!}
+    </div>
+    @endforeach
   </div>
 </div>
+
+
 
 <!-- Optional Styling -->
 <style>

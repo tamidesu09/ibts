@@ -4,17 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Models\Job;
 use App\Http\Controllers\ApplicationsController;
-use App\Models\Applications;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EvaluationController;
-
-
-
-
+use App\Models\Announcement;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +24,12 @@ use App\Http\Controllers\EvaluationController;
 */
 
 // Home Route
-Route::view('/', 'home')->name('home');
+Route::get('/', function () {
+    $announcements = Announcement::where('is_published', true)->get();
+    
+    return view('home', compact('announcements'));
+})->name('home');
+
 Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
 
@@ -127,3 +128,5 @@ Route::get('/candidate/{applicationId}', [NotesController::class, 'show'])->name
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
 Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
 Route::post('/activities/store', [ActivityController::class, 'store'])->name('activities.store');
+
+Route::resource('announcements', AnnouncementController::class)->except(['destroy']);
