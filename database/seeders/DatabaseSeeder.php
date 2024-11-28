@@ -57,10 +57,19 @@ class DatabaseSeeder extends Seeder
             'user_type' => 0,
         ]);
 
-        \App\Models\User::factory(10)->create();
-        \App\Models\Job::factory(6)->create();
-        \App\Models\Applications::factory(10)->create();
-        \App\Models\Feedback::factory(10)->create();
+        \App\Models\User::create([
+            'name' => 'iBear HR',
+            'email' => 'ibts.recruitmint@gmail.com',
+            'password' => 'password',
+            'dob' => '2003-01-01',
+            'email_verified_at' => now(),
+            'user_type' => 0,
+        ]);
+
+        // \App\Models\User::factory(10)->create();
+        // \App\Models\Job::factory(6)->create();
+        // \App\Models\Applications::factory(10)->create();
+        // \App\Models\Feedback::factory(10)->create();
         // \App\Models\Notes::factory()->create();
         // \App\Models\Activity::factory(50)->create();
     }
