@@ -176,6 +176,7 @@
                     </a>
                 </li>
                 <div class="hr-text">OTHERS</div>
+                @if(auth()->user()->is_owner == true)
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -270,6 +271,7 @@
                         </div>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item @if (Route::currentRouteName() == 'activities.index') active dropdown @endif">
                     <a class="nav-link" href="{{ route('activities.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">

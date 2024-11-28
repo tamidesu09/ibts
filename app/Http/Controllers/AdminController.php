@@ -101,10 +101,7 @@ class AdminController extends Controller
             ->select(DB::raw('
                 COUNT(*) as count, 
                 CASE 
-                    WHEN is_published = 1 THEN "Published" 
-                    WHEN is_published = 0 THEN "Unpublished" 
-                END as status
-            '))
+                    WHEN is_published = TRUE THEN \'Published\' ELSE \'Unpublished\' END as status'),)
             ->groupBy('is_published')
             ->get();
 
