@@ -203,7 +203,9 @@
                                         @foreach(json_decode($application->experiences) as $experience)
                                         <div>
                                             <h4>{{ $experience->title ?? "" }}</h4>
-                                            <p>{{ implode(', ', $experience->dates) ?? "" }}</p>
+                                            <!-- <p>{{ implode(', ', $experience->dates) ?? "" }}</p> -->
+
+                                            <p>{{!empty(experience->dates) ? implode(',', $experience->dates) : '' }}</p>
                                             <p><strong>Location:</strong> {{ $experience->location ?? "" }}</p>
                                             <p><strong>Organization:</strong> {{ $experience->organization ?? "" }}</p>
                                         </div>
