@@ -26,7 +26,7 @@ use App\Models\Announcement;
 // Home Route
 Route::get('/', function () {
     $announcements = Announcement::where('is_published', true)->get();
-    
+
     return view('home', compact('announcements'));
 })->name('home');
 
@@ -35,7 +35,7 @@ Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboa
 
 // Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('/home', 'home')->name('home');
+    // Route::view('/home', 'home')->name('home');
     Route::view('/profile/edit', 'profile.edit')->name('profile.edit');
     Route::view('/profile/password', 'profile.password')->name('profile.password');
     Route::view('/profile/two-factor', 'profile.two-factor')->name('profile.two-factor');
