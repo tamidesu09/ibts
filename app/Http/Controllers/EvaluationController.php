@@ -84,7 +84,7 @@ class EvaluationController extends Controller
         // Add a prompt to explicitly ask for the count of correct answers
         $messages[] = [
             'role' => 'user',
-            'content' => 'Based on the answers provided, grade a correct 1pt or 0.5pts if it is partially correct. Also provide your detailed insights or analysis per answer of the user. Return the data in json format only and never change it. Always enclose each analysis in double quotes. "{["correct_answers": X, "detailed_analysis": ["Analysis 1", "Analysis 2", "Analysis 3" and so on.]}" '
+            'content' => 'Based on the answers provided, grade a correct 1pt or 0.5pts if it is partially correct. Also provide your detailed insights per answers of the user, and provide a recommendation. Return the data in json format only and never change it. Always enclose each analysis in double quotes. "{["correct_answers": X, "detailed_analysis": ["Analysis 1", "Analysis 2", "Analysis 3" and so on.]}" '
             // 'content' => "Based on the answers provided, grade a correct answer 1pt, and 0.5pts if it is partially correct. Also, create a very detailed analysis and provide your insights regarding the answer of the user and indicate how much points you gave them. You may get the 'correct_answers' by getting the sum of the grade you provided to the answer. Please compute properly. This will be the end format and must never change: {'correct_answers': X, 'detailed_analysis': {Analysis to answer 1, Analysis to answer 2, and so on}}."
         ];
 
