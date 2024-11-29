@@ -179,7 +179,7 @@
                                         @foreach(json_decode($application->educations) as $education)
                                         <div>
                                             <h4>{{ $education->name ?? "" }}</h4>
-                                            <p>{{ implode(',', $education->dates) ?? "" }}</p>
+                                            <p>{{!empty($education->dates) ? implode(',', $education->dates) : '' }}</p>
                                         </div>
                                         @unless($loop->last)
                                         <hr>
@@ -546,7 +546,7 @@
             });
         });
 
-      
+
         $("#parse-resume").on("click", async function() {
             const resumeUrl = "{{ asset($application->cv_path) }}";
             const apiUrl = 'https://api.apilayer.com/resume_parser/upload';
