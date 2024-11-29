@@ -1,6 +1,6 @@
 <ul class="navbar-nav mx-auto">
-    <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('home') }}">Home</a>
+    <li class="nav-item {{ request()->routeIs('welcome') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('welcome') }}">Home</a>
     </li>
     <li class="nav-item {{ request()->routeIs('services') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('services') }}">Services</a>
