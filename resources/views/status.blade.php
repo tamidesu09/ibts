@@ -12,6 +12,25 @@
 
 <div class="container mt-5">
     <div class="row">
+        @if (session('responded'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="d-flex">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l5 5l10 -10" />
+                    </svg>
+                </div>
+                <div class="ms-2">
+                    <h4 class="alert-title">Your response has been sent!</h4>
+                    <p class="text-secondary mb-0">{{ session('responded') }}</p>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
@@ -87,7 +106,7 @@
                                 <h3>{!!$activity->description!!}</h3>
                                 <a href="{{$activity->url}}">{{$activity->url}}</a>
 
-                                @if($activity->has_accepted === null)
+                                @if($activity->has_accepted === null && $activity->date >= now()->format('Y-m-d'))
                                 <div class="my-5">
                                     <form action="{{route('activities.accept', $activity)}}" method="post">
                                         @csrf
@@ -98,11 +117,13 @@
                                         </div>
                                     </form>
                                 </div>
-                                @elseif($activity->has_accepted == true)
-                                <p class="fw-bold text-success">You have accepted the invitation</p>
-                                @elseif($activity->has_accepted == false)
-                                <p class="fw-bold text-danger">You have declined the invitation</p>
-                                @endif
+                                @elseif($activity->date < now()->format('Y-m-d'))
+                                    <p class="text-danger fw-bold">Invitation is expired</p>
+                                    @elseif($activity->has_accepted === true || $activity->has_accepted == true)
+                                    <p class="fw-bold text-success">You have accepted the invitation</p>
+                                    @elseif($activity->has_accepted === false || $activity->has_accepted == false)
+                                    <p class="fw-bold text-danger">You have declined the invitation</p>
+                                    @endif
 
 
                             </div>
