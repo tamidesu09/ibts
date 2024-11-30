@@ -145,10 +145,10 @@ class AdminController extends Controller
                         ? 'JSON_LENGTH(applications.experiences) as experience_count'  // MySQL version
                         : 'json_array_length(applications.experiences) as experience_count'  // PostgreSQL version
                 ),
+                'applications.experiences as experience_list'
             )
             // Fetch the job applications
             ->get();
-
 
 
         // Now, to get the count of applications per job (the number of users who applied for each job)
@@ -191,6 +191,7 @@ class AdminController extends Controller
                         'name' => $user->user_name,
                         'skill_count' => $user->skill_count,
                         'experience_count' => $user->experience_count,
+                        'experience_list' => $user->experience_list,
                         'application_id' => $user->application_id, // Include the application ID here
                         'matched_skill_percentage' => $matchedSkillPercentage,
                         'correct_answers' => $correctAnswers, // Append the correct_answers column here

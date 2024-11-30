@@ -177,7 +177,7 @@
                                                     })
                                                     ->toArray();
 
-                                                    $topUsers = array_slice($sortedUsers, 0, 3); // Get top 3 users
+                                                    $topUsers = array_slice($sortedUsers, 0, 3);
                                                     @endphp
 
                                                     @foreach ($topUsers as $index => $user)
@@ -197,15 +197,60 @@
                                                                 <small class="text-muted">Skills: {{ $user['skill_count'] }}</small>
                                                             </a>
                                                         </span>
+
                                                         <div class="d-flex flex-column align-items-start">
-                                                            @if ($index === 0)
-                                                            <!-- Add any specific content or functionality here if needed -->
-                                                            @endif
+
                                                             <span class="badge bg-warning mb-2">Years of Experience: {{$user['experience_count'] ?? "n/a"}}</span>
                                                             <span class="badge bg-azure mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
                                                             <span class="badge bg-lime">Correct Answers: {{$user['correct_answers']}}</span>
+
+
+
+
+
+
+
                                                         </div>
+
                                                     </li>
+                                                    @if(isset($user['experience_list']))
+                                                    <div class="mt-3">
+                                                        <strong>Experience List:</strong>
+                                                        <ul>
+                                                            @foreach(json_decode($user['experience_list'], true) as $index => $experience)
+                                                            <div class="accordion" id="accordion-{{ $index }}">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="heading-{{ $index }}">
+                                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $index }}" aria-expanded="false" aria-controls="collapse-{{ $index }}">
+                                                                            Accordion Item {{ $index + 1 }}
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapse-{{ $index }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $index }}">
+                                                                        <div class="accordion-body pt-0">
+                                                                            <strong>{{ $experience['title'] }}</strong><br>
+                                                                            <small>Location: {{ $experience['location'] }}</small><br>
+                                                                            <small>Organization: {{ $experience['organization'] }}</small><br>
+                                                                            <small>Dates:
+                                                                                @foreach($experience['dates'] as $date)
+                                                                                {{ $date }} @if(!$loop->last), @endif
+                                                                                @endforeach
+                                                                            </small><br>
+                                                                            @if(isset($experience['date_start']) && isset($experience['date_end']))
+                                                                            <small>Start Date: {{ $experience['date_start'] }}</small><br>
+                                                                            <small>End Date: {{ $experience['date_end'] }}</small><br>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @else
+                                                    <p>No experience listed.</p>
+                                                    @endif
+
+
                                                     @endforeach
                                                 </ul>
                                             </div>
