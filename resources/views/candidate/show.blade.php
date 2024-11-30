@@ -566,7 +566,6 @@
                         'apikey': apiKey
                     }
                 });
-
                 saveResume(response);
 
             } catch (error) {
