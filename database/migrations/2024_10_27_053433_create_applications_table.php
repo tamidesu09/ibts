@@ -25,6 +25,8 @@ class CreateApplicationsTable extends Migration
             $table->text('analysis')->nullable();
             $table->boolean('is_parsed')->default(false);
             $table->foreignId('user_id')->constrained();
+            $table->dateTime('access_time')->nullable();
+            $table->dateTime('expire_time')->nullable();
         });
     }
 

@@ -19,7 +19,9 @@ class Applications extends Model
         'user_id',
         'answers',
         'correct_answers',
-        'analysis'
+        'analysis',
+        'access_time',
+        'expire_time'
     ];
 
 

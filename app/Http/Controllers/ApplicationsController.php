@@ -10,9 +10,7 @@ use App\Models\User;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
-
+use Carbon\Carbon;
 
 class ApplicationsController extends Controller
 {
@@ -178,6 +176,11 @@ class ApplicationsController extends Controller
         if (auth()->user()->user_type != 1 || $application->status != 'Under Review') {
             abort(404);
         }
+
+        $application->update([
+            'access_time' => now(),
+            'expire_time' => now()->addMinute(30)
+        ]);
 
         $job = Job::findOrFail($job_id);
 
