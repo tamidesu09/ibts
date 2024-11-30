@@ -180,18 +180,18 @@
                                                     $topUsers = array_slice($sortedUsers, 0, 3);
                                                     @endphp
 
-                                                    @foreach ($topUsers as $index => $user)
+                                                    @foreach ($topUsers as $userIndex => $user)
                                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                                         <span>
                                                             <a href="{{ route('candidates.show', $user['application_id']) }}" class="text-dark">
                                                                 <strong>
-                                                                    @if ($index === 0)
+                                                                    @if ($userIndex === 0)
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#4299e1" stroke="#4299e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-crown me-2">
                                                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                         <path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" />
                                                                     </svg>
                                                                     @endif
-                                                                    {{ $index + 1 }}. {{ $user['name'] }}
+                                                                    {{ $userIndex + 1 }}. {{ $user['name'] }}
                                                                 </strong>
                                                                 <br>
                                                                 <small class="text-muted">Skills: {{ $user['skill_count'] }}</small>
@@ -199,60 +199,52 @@
                                                         </span>
 
                                                         <div class="d-flex flex-column align-items-start">
-
                                                             <span class="badge bg-warning mb-2">Years of Experience: {{$user['experience_count'] ?? "n/a"}}</span>
                                                             <span class="badge bg-azure mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
                                                             <span class="badge bg-lime">Correct Answers: {{$user['correct_answers']}}</span>
-
-
-
-
-
-
-
                                                         </div>
 
                                                     </li>
+
+
                                                     @if(isset($user['experience_list']))
-                                                    <div class="mt-3">
-                                                        <strong>Experience List:</strong>
-                                                        <ul>
-                                                            @foreach(json_decode($user['experience_list'], true) as $index => $experience)
-                                                            <div class="accordion" id="accordion-{{ $index }}">
-                                                                <div class="accordion-item">
-                                                                    <h2 class="accordion-header" id="heading-{{ $index }}">
-                                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $index }}" aria-expanded="false" aria-controls="collapse-{{ $index }}">
-                                                                            Accordion Item {{ $index + 1 }}
-                                                                        </button>
-                                                                    </h2>
-                                                                    <div id="collapse-{{ $index }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $index }}">
-                                                                        <div class="accordion-body pt-0">
-                                                                            <strong>{{ $experience['title'] }}</strong><br>
-                                                                            <small>Location: {{ $experience['location'] }}</small><br>
-                                                                            <small>Organization: {{ $experience['organization'] }}</small><br>
-                                                                            <small>Dates:
-                                                                                @foreach($experience['dates'] as $date)
-                                                                                {{ $date }} @if(!$loop->last), @endif
-                                                                                @endforeach
-                                                                            </small><br>
-                                                                            @if(isset($experience['date_start']) && isset($experience['date_end']))
-                                                                            <small>Start Date: {{ $experience['date_start'] }}</small><br>
-                                                                            <small>End Date: {{ $experience['date_end'] }}</small><br>
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
+                                                    <div class="hr-text my-3">Work Experience</div>
+                                                    <div class="row">
+                                                        @foreach(json_decode($user['experience_list'], true) as $experienceIndex => $experience)
+                                                        <div class="col-md-6 mb-4">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title"><strong>{{ $experience['title'] }}</strong></h5>
+                                                                    <p class="card-text">
+                                                                        <small>Location: {{ $experience['location'] }}</small><br>
+                                                                        <small>Organization: {{ $experience['organization'] }}</small><br>
+                                                                        <small>Dates:
+                                                                            @foreach($experience['dates'] as $date)
+                                                                            {{ $date }} @if(!$loop->last), @endif
+                                                                            @endforeach
+                                                                        </small><br>
+                                                                        @if(isset($experience['date_start']) && isset($experience['date_end']))
+                                                                        <small>Start Date: {{ $experience['date_start'] }}</small><br>
+                                                                        <small>End Date: {{ $experience['date_end'] }}</small><br>
+                                                                        @endif
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                            @endforeach
-                                                        </ul>
+                                                        </div>
+                                                        @endforeach
                                                     </div>
                                                     @else
-                                                    <p>No experience listed.</p>
+                                                    <p class="text-muted">No experience listed.</p>
                                                     @endif
 
 
                                                     @endforeach
+                                                    <div class="hr-text">See also</div>
+
+
+
                                                 </ul>
+
                                             </div>
                                         </div>
 
@@ -394,6 +386,15 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Manually initialize the popover
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    });
+</script>
 <!-- GENDERS -->
 <script>
     const chartData = @json($gendersData);
