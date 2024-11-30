@@ -25,6 +25,13 @@ class Applications extends Model
     ];
 
 
+    protected $casts = [
+        'access_time' => 'datetime',
+        'expire_time' => 'datetime',
+    ];
+
+
+
     // In Application.php model
     public function job()
     {

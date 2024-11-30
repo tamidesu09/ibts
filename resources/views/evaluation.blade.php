@@ -50,7 +50,40 @@
     </div>
     @endif
 
+    @if (session('expired'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="d-flex">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l5 5l10 -10" />
+                </svg>
+            </div>
+            <div class="ms-2">
+                <h4 class="alert-title">Expired</h4>
+                <p class="text-secondary mb-0">{{ session('expired') }}</p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
+    <div class="row g-3 mb-3">
+        <div class="card">
+            <div class="card-body">Start Time: {{ $application->access_time->format('M d, Y h:i:s a') }}</div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">Expire Time: {{ $application->expire_time->format('M d, Y h:i:s a') }}</div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">Remaining Time: <span id="remaining-time"></span></div>
+        </div>
+
+    </div>
 
 
     <div class="card">
@@ -68,7 +101,7 @@
                 <div class="mb-3">
                     <label for="answer_{{ $index }}" class="form-label fw-semibold">{{ $question }}</label>
                     <input type="text" name="answers[{{ $index }}]" id="answer_{{ $index }}"
-                        class="form-control" placeholder="Enter your answer here" required>
+                        class="form-control" placeholder="Enter your answer here" required @if($application->expire_time < now()) disabled @endif>
                 </div>
                 @endforeach
 
@@ -76,7 +109,7 @@
                 <input type="hidden" name="application_id" value="{{ $application_id }}">
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Submit Answers</button>
+                    <button type="submit" class="btn btn-primary" @if($application->expire_time < now()) disabled @endif>Submit Answers</button>
                 </div>
             </form>
             @else
@@ -92,5 +125,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    const expireTime = new Date("{{ $application->expire_time->format('Y-m-d H:i:s') }} UTC").getTime();
+
+
+    function updateRemainingTime() {
+        const currentTime = new Date().getTime();
+        const timeRemaining = expireTime - currentTime;
+
+        const minutes = Math.floor(timeRemaining / 1000 / 60);
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        if (timeRemaining > 0) {
+            document.getElementById("remaining-time").innerHTML = `${minutes}m ${seconds}s`;
+        } else {
+            document.getElementById("remaining-time").innerHTML = "Expired";
+        }
+
+        console.log(seconds);
+    }
+
+    setInterval(updateRemainingTime, 1000);
+</script>
 
 @endsection

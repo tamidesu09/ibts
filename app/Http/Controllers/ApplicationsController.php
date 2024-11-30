@@ -177,14 +177,16 @@ class ApplicationsController extends Controller
             abort(404);
         }
 
-        $application->update([
-            'access_time' => now(),
-            'expire_time' => now()->addMinute(30)
-        ]);
+        if (empty($application->access_time) && empty($application->expire_time)) {
+            $application->update([
+                'access_time' => now(),
+                'expire_time' => now()->addMinute(30)
+            ]);
+        }
 
         $job = Job::findOrFail($job_id);
 
-        $questions = json_decode($job->questions);  // Assuming JSON column
+        $questions = json_decode($job->questions); 
 
         return view('evaluation', compact('job', 'application_id', 'application', 'questions'));
     }

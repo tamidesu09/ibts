@@ -15,49 +15,41 @@ class EvaluationController extends Controller
     public function evaluate(Request $request)
 
     {
-
         try {
+
             $application = Applications::findOrFail($request->application_id);
 
-            $answers = $request->input('answers'); // This should be an array from the form submission
-
+            $answers = $request->input('answers');
 
             $application->answers = json_encode($answers);
 
-
-            // Fetch the job and the questions
-            $job = DB::table('jobs')->where('id', $request->job_id)->first();  // Fetch job data, adapt if needed
+            $job = DB::table('jobs')->where('id', $request->job_id)->first();
 
             $questions = json_decode($job->questions);
 
-            // Prepare the messages for OpenAI to evaluate
             $messages = $this->prepareEvaluationMessages($questions, $answers);
 
-
-            // Call OpenAI API to evaluate the answers
             $response = $this->callOpenAIForEvaluation($messages);
 
-
-            // Get the result from the response
             $result = $response['choices'][0]['message']['content'];
 
-
             $decodeResults = json_decode($result, true);
-
-
             $correctAnswers = $decodeResults['correct_answers'];
-
-
-
             $analysis = $decodeResults['detailed_analysis'];
-
 
             $application->correct_answers = $correctAnswers;
             $application->analysis = $analysis;
+
+            if (now() > $application->expire_time) {
+
+                return redirect()->back()->with('expired', 'Thank you for your time. Unfortunately, the timer has expired already');
+            }
+            
             $application->save();
-            // Return the result in the expected format (e.g., number of correct answers)
+
             return redirect()->back()->with('success', 'Thank you for submitting your answers. Your answer will be evaluated');
         } catch (Exception $e) {
+
             return redirect()->back()->with('failed-evaluation', 'An error has occurred while submitting your answer. Please resubmit');
         }
     }
