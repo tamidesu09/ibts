@@ -67,13 +67,12 @@ class DatabaseSeeder extends Seeder
             'is_owner' => true
         ]);
 
-        \App\Models\User::factory(10)->create();
-        \App\Models\Job::factory(6)->create();
-        \App\Models\Applications::factory(10)->create();
-        \App\Models\Feedback::factory(10)->create();
+        \App\Models\User::factory(app()->environment('production') ? 10 : 250)->create();
+        \App\Models\Job::factory(app()->environment('production') ? 6 : 25)->create();
+        \App\Models\Applications::factory(app()->environment('production') ? 10 : 150)->create();
+        \App\Models\Feedback::factory(app()->environment('production') ? 10 : 50)->create();
         \App\Models\Notes::factory()->create();
-        \App\Models\Activity::factory(50)->create();
-        \App\Models\Announcement::factory(50)->create();
-
+        \App\Models\Activity::factory(app()->environment('production') ? 50 : 100)->create();
+        \App\Models\Announcement::factory(app()->environment('production') ? 50 : 100)->create();
     }
 }

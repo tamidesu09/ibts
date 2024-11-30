@@ -85,7 +85,26 @@
                                 <h3>{{$activity->hours_end}}</h3>
                                 <h3>{{$activity->location}}</h3>
                                 <h3>{!!$activity->description!!}</h3>
-                                <h3>{{$activity->url}}</h3>
+                                <a href="{{$activity->url}}">{{$activity->url}}</a>
+
+                                @if($activity->has_accepted === null)
+                                <div class="my-5">
+                                    <form action="{{route('activities.accept', $activity)}}" method="post">
+                                        @csrf
+                                        <div class=" mb-3">
+                                            <label class="form-label">Accept this invitation?</label>
+                                            <input class="btn" name="response" type="submit" value="Accept">
+                                            <input class="btn" name="response" type="submit" value="Decline">
+                                        </div>
+                                    </form>
+                                </div>
+                                @elseif($activity->has_accepted == true)
+                                <p class="fw-bold text-success">You have accepted the invitation</p>
+                                @elseif($activity->has_accepted == false)
+                                <p class="fw-bold text-danger">You have declined the invitation</p>
+                                @endif
+
+
                             </div>
                         </div>
                         @endforeach

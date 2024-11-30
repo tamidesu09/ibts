@@ -18,7 +18,8 @@ class Activity extends Model
         'location',
         'description',
         'url',
-        'user_id'
+        'user_id',
+        'has_accepted'
     ];
 
     public function user()

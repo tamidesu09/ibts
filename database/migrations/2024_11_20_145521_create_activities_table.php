@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->text('description');
             $table->text('url')->nullable();
+            $table->boolean('has_accepted')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

@@ -134,5 +134,7 @@ Route::get('/candidate/{applicationId}', [NotesController::class, 'show'])->name
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
 Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
 Route::post('/activities/store', [ActivityController::class, 'store'])->name('activities.store');
+Route::post('/activities/accept/{activity}', [ActivityController::class, 'accept'])->name('activities.accept');
+
 
 Route::resource('announcements', AnnouncementController::class)->except(['destroy']);

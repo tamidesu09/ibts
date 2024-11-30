@@ -31,6 +31,23 @@ class ActivityController extends Controller
         return view('activities.create', compact('attendees'));
     }
 
+    public function accept(Request $request, Activity $activity)
+    {
+        if (auth()->user()->user_type != 1) {
+            abort(404);
+        }
+
+        $request->validate([
+            'has_accepted' => 'in:Agree,Decline'
+        ]);
+
+        $activity->update([
+            'has_accepted' => $request->response == "Accept" ? true : false
+        ]);
+
+        return redirect()->back()->with('responded', 'Your response has been sent');
+    }
+
     public function store(ActivityStoreRequest $request)
     {
         if (auth()->user()->user_type != 0) {
