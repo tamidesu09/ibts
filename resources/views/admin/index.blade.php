@@ -171,10 +171,9 @@
                                                 <h5 class="text-center text-azure card card-header fw-bold">Top Ranking Candidates</h5>
                                                 <ul class="list-group">
                                                     @php
-                                                    // Sort users by matched_skill_percentage in descending order
                                                     $sortedUsers = collect($jobData['users'])
                                                     ->sortByDesc(function ($user) {
-                                                    return [$user['matched_skill_percentage'], $user['correct_answers']];
+                                                    return [$user['experience_count'], $user['matched_skill_percentage'], $user['correct_answers']];
                                                     })
                                                     ->toArray();
 
@@ -202,6 +201,7 @@
                                                             @if ($index === 0)
                                                             <!-- Add any specific content or functionality here if needed -->
                                                             @endif
+                                                            <span class="badge bg-warning mb-2">Years of Experience: {{$user['experience_count'] ?? "n/a"}}</span>
                                                             <span class="badge bg-azure mb-2">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span>
                                                             <span class="badge bg-lime">Correct Answers: {{$user['correct_answers']}}</span>
                                                         </div>
@@ -219,6 +219,7 @@
                                                     class="d-block p-3 rounded shadow-sm text-decoration-none"
                                                     style="background-color: #f9f9f9; transition: transform 0.2s, box-shadow 0.2s;">
                                                     <strong class="text-dark">{{ $user['name'] }}</strong><br>
+                                                    <span class="text-muted">Years of Experience: {{ $user['experience_count'] }}</span><br>
                                                     <span class="text-muted">Matched Skills: {{ $user['matched_skill_percentage'] }}%</span><br>
                                                     <span class="text-muted">Skills Count: {{ $user['skill_count'] }}</span>
                                                     <h5 class="text-success">CORRECT ANSWERS: {{$user['correct_answers']}}</h1>
