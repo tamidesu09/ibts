@@ -67,7 +67,7 @@
                                 <th>Attendee</th>
                                 <th>Description</th>
                                 <th>URL</th>
-                                <th class="text-center">Actions</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,21 +80,15 @@
                                 <td>{{ $activity->location}}</td>
                                 <td>{{ $activity->user->name}}</td>
                                 <td>{!! $activity->description !!}</td>
-                                <td>{{ $activity->url}}</td>
+                                <td> <a href="{{ $activity->url}}"> {{ $activity->url}} </a></td>
                                 <td class="text-center">
-                                    <a href="#" class="text-primary"
-                                        title="View Details">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path
-                                                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                        </svg>
-                                    </a>
+                                    @if($activity->has_accepted === null)
+                                    <p class="text-danger">No response / Expired</p>
+                                    @elseif($activity->has_accepted == true || $activity->has_accepted === true)
+                                    <p class="text-success">Accepted</p>
+                                    @else
+                                    <p class="text-danger">Declined</p>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
