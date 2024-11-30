@@ -552,6 +552,10 @@
             const apiUrl = 'https://api.apilayer.com/resume_parser/upload';
             const apiKey = 'EvYEHCEeqjc2IFghCoRNj5UAGDEeChYD';
 
+            const button = $(this);
+            button.prop('disabled', true);
+            button.html('Loading... <i class="fa fa-spinner fa-spin"></i>');
+
             try {
                 // Step 1: Fetch the file from Laravel localhost
                 const fileResponse = await axios.get(resumeUrl, {
@@ -571,6 +575,9 @@
             } catch (error) {
                 console.error("Error:", error);
                 alert("An error occurred while uploading the resume.");
+            } finally {
+                button.prop('disabled', false);
+                button.html('Parse Resume');
             }
         });
 
@@ -584,6 +591,10 @@
 
             console.log(skill_list, education_list, experience_list);
 
+            const button = $("#parse-resume");
+            button.prop('disabled', true);
+            button.html('Saving... <i class="fa fa-spinner fa-spin"></i>');
+
             try {
                 const response = await axios.post('{{route("candidates.parseResume")}}', {
                     application_id: "{{$application->id}}",
@@ -595,12 +606,13 @@
                         'X-CSRF-TOKEN': csrfToken // Add the CSRF token here
                     }
                 });
-
-                location.reload();
-
             } catch (error) {
                 console.error("Error:", error);
 
+            } finally {
+                button.prop('disabled', false);
+                button.html('Parse Resume');
+                location.reload();
             }
         }
 
