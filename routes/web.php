@@ -87,6 +87,11 @@ Route::get('/chats', function () {
     return view('chats'); // candi_info.blade.php
 })->name('chats.index');
 
+Route::get('/terms', function () {
+    return view('terms'); // candi_info.blade.php
+})->name('terms');
+
+
 
 Route::get('job_applications', [ApplicationsController::class, 'getJobApplications'])->middleware(['auth', 'verified'])->name('applicants.getJobApplications');
 Route::get('evaluation/{application_id}/{job_id}', [ApplicationsController::class, 'showEvaluation'])->middleware(['auth', 'verified'])->name('applicants.showEvaluation');

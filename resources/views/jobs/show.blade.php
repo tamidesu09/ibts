@@ -5,6 +5,7 @@
 @section('content')
 <title>Job Information</title>
 
+
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
@@ -199,7 +200,28 @@
                             <!-- CV Upload Field -->
                             <div class="mb-3">
                                 <label class="form-label">Attach Your CV <span
-                                        class="text-danger fw-bold">*</span></label>
+                                        class="text-danger fw-bold">*<!-- Button to Trigger the Modal -->
+                                        <button type="button" class="badge badge-pill bg-blue" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                            ?
+                                        </button></label>
+
+                                <!-- Modal Structure -->
+                                <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="imageModalLabel">Sample CV</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img src="{{ asset('img/samplecv.png') }}" alt="Sample CV" style="width: 100%; height: auto; max-width: 710px;">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="file" class="form-control" name="cv" id="cv-upload">
 
 
@@ -209,6 +231,16 @@
                                 @error('cv')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
+                            </div>
+
+                            <!-- Privacy Policy Agreement Checkbox -->
+                            <div class="mb-3">
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="privacy_policy" id="privacy_policy" required>
+                                    <label class="form-check-label" for="privacy_policy">
+                                        By submitting this form, you agree to our <a href="{{ route('terms') }}" target="_blank">Privacy Policy</a>.
+                                    </label>
+                                </label>
                             </div>
                             <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
                         </form>
@@ -237,4 +269,5 @@
         text-align: center;
     }
 </style>
+
 @endsection

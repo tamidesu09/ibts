@@ -7,6 +7,23 @@
 
 <title>Candidate Information</title>
 
+<style>
+    .profile-banner {
+        background-size: cover;
+        background-position: center;
+        height: 200px;
+    }
+
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+        border: 4px solid white;
+        position: absolute;
+        top: 150px;
+        left: 20px;
+        background-color: #f0f0f0;
+    }
+</style>
 
 <div class="page-body">
     <div class="container">
@@ -23,39 +40,39 @@
                 Back
             </a>
         </div>
+        <div class="container mt-5">
+            <div class="card shadow">
+                <!-- Profile Banner -->
+                <div class="profile-banner rounded-top" style="background-image: url('{{ asset('img/pfpbg.jpg') }}'); background-size: cover; background-position: center; height: 200px;"></div>
 
+                <!-- Profile Picture -->
+                <img alt="Profile picture of {{ $application->complete_name }}"
+                    class="rounded-circle profile-picture"
+                    src="{{ asset('img/avatar.png') }}" />
 
-        <div class="card border-0 shadow-sm col-md-6 mt-5">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-
-                    <span class="avatar avatar-xl">
-                        <img src="{{ asset('img/avatar.png') }}" alt="Recruit Image">
-                    </span>
-
-                    <div class="ms-3">
-                        <div class="d-flex align-items-center">
-                            <h2 class="mb-0 text-primary">{{ $application->complete_name }}</h2>
-                            <hr>
+                <!-- Card Body -->
+                <div class="card-body pt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- User Details -->
+                        <div>
+                            <h5 class="card-title text-primary mt-5">{{ $application->complete_name }}</h5>
+                            <p class="card-text text-muted">{{ $application->job->title }}</p>
+                            <div class="d-flex align-items-center text-muted">
+                                <!-- Email Icon -->
+                                <span class="me-2 text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z" />
+                                        <path d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z" />
+                                    </svg>
+                                </span>
+                                <span>{{ $application->email }}</span>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center mt-2">
-                            <span class="me-2 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-mail">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z" />
-                                    <path d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z" />
-                                </svg>
-                            </span>
-                            <h4 class="text-muted mb-0">{{ $application->email }}</h4>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <span class="me-2 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-briefcase-2">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M14 2a3 3 0 0 1 3 3v1h2a3 3 0 0 1 3 3v9a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3h2v-1a3 3 0 0 1 3 -3zm0 2h-4a1 1 0 0 0 -1 1v1h6v-1a1 1 0 0 0 -1 -1" />
-                                </svg>
-                            </span>
-                            <h4 class="text-muted mb-0">{{ $application->job->title }}</h4>
+
+                        <!-- Actions -->
+                        <div class="d-flex">
+                            <a href="{{ route('activities.index') }}" class="btn btn-dark">Interview</a>
                         </div>
                     </div>
                 </div>
@@ -242,13 +259,86 @@
 
                     <!-- Additional Tab Contents (Resume, Notes, History) -->
                     <div class="tab-pane" id="tabs-resume">
-
                         @if($application->is_parsed == false)
                         <button id="parse-resume" class="btn btn-dark mb-3">Parse Resume</button>
                         @endif
-                        <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 100vh">
-                        </iframe>
+
+                        <iframe src="{{ asset($application->cv_path) }}" style="width: 100%; height: 400px;" class="mb-4"></iframe>
+
+                        <!-- Side by Side Layout using Bootstrap Grid -->
+                        <div class="row">
+                            <!-- Skills Card -->
+                            @if($application->is_parsed == true)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header bg-dark">
+                                        <h3 class="card-title text-light">Skills</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <li class="d-flex flex-wrap gap-2">
+                                                @foreach(json_decode($application->skills) as $skill)
+                                                <span class="badge badge-pill bg-green-lt">{{ $skill }}</span>
+                                                @endforeach
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
+                            <!-- Education Background Card -->
+                            @if($application->is_parsed == true)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header bg-dark">
+                                        <h3 class="card-title text-light">Education Background</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        @if(!empty($application->educations) && count(json_decode($application->educations)) > 0)
+                                        @foreach(json_decode($application->educations) as $education)
+                                        <div>
+                                            <h4>{{ $education->name ?? "" }}</h4>
+                                            <p>{{ !empty($education->dates) ? implode(',', $education->dates) : '' }}</p>
+                                        </div>
+                                        @unless($loop->last)
+                                        <hr>
+                                        @endunless
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
+                            <!-- Experience Card -->
+                            @if($application->is_parsed == true)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header bg-dark">
+                                        <h3 class="card-title text-light">Experience</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        @if(!empty($application->experiences) && count(json_decode($application->experiences)) > 0)
+                                        @foreach(json_decode($application->experiences) as $experience)
+                                        <div>
+                                            <h4>{{ $experience->title ?? "" }}</h4>
+                                            <p>{{ !empty($experience->dates) ? implode(',', $experience->dates) : '' }}</p>
+                                            <p><strong>Location:</strong> {{ $experience->location ?? "" }}</p>
+                                            <p><strong>Organization:</strong> {{ $experience->organization ?? "" }}</p>
+                                        </div>
+                                        @unless($loop->last)
+                                        <hr>
+                                        @endunless
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
+
 
 
 

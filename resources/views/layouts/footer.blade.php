@@ -22,7 +22,7 @@
             <p><a href="#" class="text-white">Your Account</a></p>
             <p><a href="{{ route('services') }}" class="text-white">Services</a></p>
             <p><a href="{{ route('contact') }}" class="text-white">Contact Us</a></p>
-            <p><a href="#" class="text-white">Help</a></p>
+            <p><a href="{{ route('terms') }}" class="text-white">Terms and Condition</a></p>
           </div>
           <!-- Column 3: Contact -->
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">

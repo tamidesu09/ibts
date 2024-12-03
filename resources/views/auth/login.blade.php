@@ -29,23 +29,28 @@
                                 <a href="{{ route('password.request') }}">I forgot my password</a>
                             </span>
                         </label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                        <div class="input-group">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <button class="btn btn-outline-primary" type="button" id="togglePassword">
+                                <i class="far fa-eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </div>
+
                     <div class="mb-2">
                         <label class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                             <label class="form-check-label" for="remember">
                                 {{ __('Remember Me') }}
                             </label>
                         </label>
                     </div>
+
                     <div class="form-footer">
                         <button type="submit" class="btn btn-primary w-100">Sign in</button>
                     </div>
@@ -74,9 +79,32 @@
             </div>
         </div>
         <div class="text-center text-muted mt-3">
-            Don't have account yet? <a href="{{route('register')}}" tabindex="-1">Register</a>
+            Don't have an account yet? <a href="{{route('register')}}" tabindex="-1">Register</a>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        togglePassword.addEventListener('click', () => {
+            // Toggle password visibility
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+
+            // Toggle icon
+            if (type === 'text') {
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        });
+    });
+</script>
 
 @endsection
