@@ -200,6 +200,12 @@ class AdminController extends Controller
             ];
         }
 
+        $jobAnswers = DB::table('applications')
+            ->join('jobs', 'applications.job_id', '=', 'jobs.id')
+            ->select('jobs.title', DB::raw('count(`correct_answers`) as correct_answers'))
+            ->groupBy('jobs.title')
+            ->get();
+
         return view('admin.index', compact([
             'gendersData',
             'jobTypeSeries',
@@ -211,7 +217,8 @@ class AdminController extends Controller
             'notesCount',
             'activities',
             'results',
-            'announcements'
+            'announcements',
+            'jobAnswers'
         ]));
     }
 }
