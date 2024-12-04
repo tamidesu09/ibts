@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('dob');
             $table->smallInteger('user_type')->default(1);
             $table->boolean('is_owner')->default(false);
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

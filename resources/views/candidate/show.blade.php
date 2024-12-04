@@ -44,11 +44,16 @@
             <div class="card shadow">
                 <!-- Profile Banner -->
                 <div class="profile-banner rounded-top" style="background-image: url('{{ asset('img/pfpbg.jpg') }}'); background-size: cover; background-position: center; height: 200px;"></div>
-
+                @if(empty($application->user->profile_picture))
                 <!-- Profile Picture -->
                 <img alt="Profile picture of {{ $application->complete_name }}"
                     class="rounded-circle profile-picture"
                     src="{{ asset('img/avatar.png') }}" />
+                @else
+                <img alt="Profile picture of {{ $application->complete_name }}"
+                    class="rounded-circle profile-picture"
+                    src="{{ asset($application->user->profile_picture) }}" />
+                @endif
 
                 <!-- Card Body -->
                 <div class="card-body pt-5">

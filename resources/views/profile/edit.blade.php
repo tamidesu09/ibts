@@ -39,13 +39,22 @@
                     </div>
                 </div>
                 <div class="col-8 d-flex flex-column">
-                    <form method="POST" action="{{ route('user-profile-information.update') }}">
+                    <form method="POST" action="{{ route('user-profile-information.update') }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <h2 class="mb-4">My Account</h2>
-                            <h3 class="card-title mt-4">Profile Information</h3>
+                            <!-- Image Preview Container -->
+                            <div class="mt-3">
+                                <img id="image_preview" src="#" alt="Profile Picture Preview" style="max-width: 235px; display: none; border-radius: 5px;" />
+                            </div>
 
+                            <!-- Profile Picture Section -->
+                            <h3 class="card-title mt-4">Profile Picture</h3>
+                            <input type="file" class="form-control @error('profile_picture') is-invalid @enderror" name="profile_picture" id="profile_picture" style="max-width:235px" onchange="previewImage(event)">
+
+                            <!-- Profile Information Section -->
+                            <h3 class="card-title mt-4">Profile Information</h3>
                             <div class="row g-3">
                                 <div class="col-md">
                                     <div class="form-label">Name</div>
@@ -67,7 +76,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-footer bg-transparent mt-auto">
                             <div class="btn-list justify-content-end">
@@ -85,4 +93,23 @@
         </div>
     </div>
 </div>
+<!-- JavaScript to preview the image -->
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        // Once the file is read, display the image
+        reader.onload = function() {
+            const imagePreview = document.getElementById('image_preview');
+            imagePreview.src = reader.result; // Set the image source to the result
+            imagePreview.style.display = 'block'; // Make the preview visible
+        };
+
+        // Read the file as a data URL
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 @endsection

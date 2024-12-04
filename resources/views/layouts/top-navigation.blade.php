@@ -38,13 +38,9 @@
           <div class="nav-item dropdown">
             <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
               <div class="d-none d-xl-flex align-items-center ps-2">
-                <span class="avatar me-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler- text-blue icon-tabler-user">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                  </svg><span class="badge bg-azure"></span>
-                </span>
+                @if(!empty(auth()->user()->profile_picture))
+                <img class="me-2" src="{{ asset(auth()->user()->profile_picture) }}" height=30 width=30>
+                @endif
                 <div>
                   <div>{{ auth()->user()->name }}</div>
                   <div class="mt-1 fw-bold text-blue">

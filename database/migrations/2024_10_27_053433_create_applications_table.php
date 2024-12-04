@@ -10,13 +10,13 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('complete_name'); // Complete Name (FN, MI, S)
-            $table->string('email');         // Email Address
-            $table->string('phone_number')->nullable();  // Phone Number
-            $table->string('sex')->nullable(); // Sex (Optional)
-            $table->string('cv_path');        // Attach Your CV (Path to stored file)
+            $table->string('complete_name');
+            $table->string('email');        
+            $table->string('phone_number')->nullable();  
+            $table->string('sex')->nullable(); 
+            $table->string('cv_path');       
             $table->string('status')->default('Application Received');
-            $table->timestamps();             // created_at and updated_at
+            $table->timestamps();            
             $table->json('skills')->nullable();
             $table->json('educations')->nullable();
             $table->json('experiences')->nullable();
