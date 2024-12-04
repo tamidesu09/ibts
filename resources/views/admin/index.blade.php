@@ -207,7 +207,13 @@
                                                                         <path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z" />
                                                                     </svg>
                                                                     @endif
-                                                                    {{ $userIndex + 1 }}. {{ $user['name'] }}
+                                                                    {{ $userIndex + 1 }}.
+
+                                                                    @if(!empty($user['profile_picture']))
+                                                                    <img class="img mx-3" src="{{ asset($user['profile_picture'])}}" width=50 height=50>
+                                                                    @endif
+
+                                                                    {{ $user['name'] }}
                                                                 </strong>
                                                                 <br>
                                                                 <small class="text-muted">Skills: {{ $user['skill_count'] }}</small>

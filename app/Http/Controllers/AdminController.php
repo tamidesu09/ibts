@@ -132,6 +132,7 @@ class AdminController extends Controller
                 'applications.job_id',
                 'jobs.title as job_name',
                 'users.name as user_name',
+                'users.profile_picture',
                 'applications.skills',
                 'applications.correct_answers',  // Include the correct_answers field
                 'jobs.requirements',
@@ -149,7 +150,6 @@ class AdminController extends Controller
             )
             // Fetch the job applications
             ->get();
-
 
         // Now, to get the count of applications per job (the number of users who applied for each job)
         $jobApplicationCounts = DB::table('applications')
@@ -189,6 +189,7 @@ class AdminController extends Controller
 
                     return [
                         'name' => $user->user_name,
+                        'profile_picture' => $user->profile_picture,
                         'skill_count' => $user->skill_count,
                         'experience_count' => $user->experience_count,
                         'experience_list' => $user->experience_list,
