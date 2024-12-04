@@ -127,16 +127,20 @@
 </div>
 
 <script>
-    const expireTime = new Date("{{ $application->expire_time->format('Y-m-d H:i:s') }} UTC").getTime();
-
+    // Convert the expire time to the correct Philippines time (UTC +8)
+    const expireTimeUTC = new Date("{{ $application->expire_time->format('Y-m-d H:i:s') }} UTC").getTime();
+    const expireTime = expireTimeUTC - (8 * 60 * 60 * 1000); // Add 8 hours for UTC+8 (Philippines Time)
 
     function updateRemainingTime() {
         const currentTime = new Date().getTime();
+
+        // Calculate remaining time
         const timeRemaining = expireTime - currentTime;
 
         const minutes = Math.floor(timeRemaining / 1000 / 60);
         const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
+        // Update the remaining time or display "Expired"
         if (timeRemaining > 0) {
             document.getElementById("remaining-time").innerHTML = `${minutes}m ${seconds}s`;
         } else {
@@ -146,7 +150,9 @@
         console.log(seconds);
     }
 
+    // Update the time every second
     setInterval(updateRemainingTime, 1000);
 </script>
+
 
 @endsection
