@@ -206,6 +206,14 @@ class AdminController extends Controller
             ->groupBy('jobs.title')
             ->get();
 
+        $jobAnswersSeries = $jobAnswers->map(function ($item) {
+            return [
+                'name' => ucfirst($item->title), // Job type name
+                'y' => $item->correct_answers, // Count of jobs
+            ];
+        });
+
+
         return view('admin.index', compact([
             'gendersData',
             'jobTypeSeries',
@@ -218,7 +226,7 @@ class AdminController extends Controller
             'activities',
             'results',
             'announcements',
-            'jobAnswers'
+            'jobAnswersSeries'
         ]));
     }
 }

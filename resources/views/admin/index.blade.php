@@ -140,6 +140,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h4 class="card-title mb-0">Correct Answer Count for All Job Applications</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <figure class="highcharts-figure">
+                                            <div id="job-answers-container"></div>
+                                            <h4 class="highcharts-description" style="text-align: justify;">
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto tempora placeat soluta hic modi, tempore ipsum suscipit iste adipisci odio ea alias, corrupti ex molestias autem praesentium aut beatae impedit voluptatem enim. Ad, sint porro possimus nesciunt quibusdam amet fugiat sed consectetur qui facere, ullam soluta nobis deleniti magnam repellat enim tempora? Rem excepturi recusandae architecto perspiciatis aspernatur expedita, officia aliquam, eveniet nostrum sunt quis dolorem? Quisquam, obcaecati dolor, a id, reprehenderit sint ipsum quis error facilis natus repudiandae dolores sequi aperiam. Corporis molestias quia eius quae, earum officia numquam ducimus consectetur cum deserunt et, pariatur ab vero accusantium perferendis.
+                                            </h4>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,17 +234,17 @@
                                                                     <p class="card-text">
                                                                         <small>Location: {{ $experience['location'] ?? 'N/A' }}</small><br>
                                                                         <small>Organization: {{ $experience['organization'] ?? 'N/A' }}</small><br>
-                                                                        
+
                                                                         <small>Dates:
                                                                             @if(isset($experience['dates']) && is_array($experience['dates']))
-                                                                                @foreach($experience['dates'] as $date)
-                                                                                    {{ $date }} @if(!$loop->last), @endif
-                                                                                @endforeach
+                                                                            @foreach($experience['dates'] as $date)
+                                                                            {{ $date }} @if(!$loop->last), @endif
+                                                                            @endforeach
                                                                             @else
-                                                                                N/A
+                                                                            N/A
                                                                             @endif
                                                                         </small><br>
-                                                                        
+
                                                                         @if(isset($experience['date_start']) && isset($experience['date_end']))
                                                                         <small>Start Date: {{ $experience['date_start'] }}</small><br>
                                                                         <small>End Date: {{ $experience['date_end'] }}</small><br>
@@ -554,6 +570,61 @@
 
     });
 </script>
+
+<!-- JOB ANSWERS -->
+<script>
+    const jobAnswerSeries = @json($jobAnswersSeries);
+    Highcharts.chart('job-answers-container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            align: 'left',
+            text: 'Job Title'
+        },
+
+        accessibility: {
+            announceNewData: {
+                enabled: true
+            }
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Total count of correct answers per jobs applied to'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.0f}'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                '<b>{point.y:.0f}</b> of total<br/>'
+        },
+
+        series: [{
+            name: 'Browsers',
+            colorByPoint: true,
+            data: jobAnswerSeries
+        }],
+
+    });
+</script>
+
 
 <!-- SKILL COUNT FOR ALL CONTAINERS -->
 <script>
