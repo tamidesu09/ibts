@@ -93,43 +93,65 @@
                         @endforeach
                     </div>
                     <div class="tab-pane" id="tabs-profile-ex1">
-                        <h3>Activities ({{$activities->count()}})</h3>
+                        <h3 class="mb-4">Activities ({{$activities->count()}})</h3>
                         @foreach($activities as $activity)
-                        <div class="card mb-5">
-                            <div class="card-body">
-                                <h3>{{$activity->title}}</h3>
-                                <h3>{{$activity->type}}</h3>
-                                <h3>{{$activity->date}}</h3>
-                                <h3>{{$activity->hours_start}}</h3>
-                                <h3>{{$activity->hours_end}}</h3>
-                                <h3>{{$activity->location}}</h3>
-                                <h3>{!!$activity->description!!}</h3>
-                                <a href="{{$activity->url}}">{{$activity->url}}</a>
-
-                                @if($activity->has_accepted === null && $activity->date >= now()->format('Y-m-d'))
-                                <div class="my-5">
-                                    <form action="{{route('activities.accept', $activity)}}" method="post">
-                                        @csrf
-                                        <div class=" mb-3">
-                                            <label class="form-label">Accept this invitation?</label>
-                                            <input class="btn" name="response" type="submit" value="Accept">
-                                            <input class="btn" name="response" type="submit" value="Decline">
-                                        </div>
-                                    </form>
-                                </div>
-                                @elseif($activity->date < now()->format('Y-m-d'))
-                                    <p class="text-danger fw-bold">Invitation is expired</p>
-                                    @elseif($activity->has_accepted === true || $activity->has_accepted == true)
-                                    <p class="fw-bold text-success">You have accepted the invitation</p>
-                                    @elseif($activity->has_accepted === false || $activity->has_accepted == false)
-                                    <p class="fw-bold text-danger">You have declined the invitation</p>
-                                    @endif
-
-
-                            </div>
-                        </div>
+                        <table class="table table-bordered mb-5">
+                            <tbody>
+                                <tr>
+                                    <th class="table-light" style="width: 25%;">Title</th>
+                                    <td class="fw-bold">{{$activity->title}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Type</th>
+                                    <td>{{$activity->type}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Date</th>
+                                    <td>{{\Carbon\Carbon::parse($activity->date)->format('F d, Y')}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Time</th>
+                                    <td>{{$activity->hours_start}} - {{$activity->hours_end}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Location</th>
+                                    <td>{{$activity->location}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Description</th>
+                                    <td>{!!$activity->description!!}</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">URL</th>
+                                    <td>
+                                        <a href="{{$activity->url}}" target="_blank" class="text-decoration-underline text-primary">
+                                            {{$activity->url}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Actions</th>
+                                    <td>
+                                        @if($activity->has_accepted === null && $activity->date >= now()->format('Y-m-d'))
+                                        <form action="{{route('activities.accept', $activity)}}" method="post" class="d-flex gap-2">
+                                            @csrf
+                                            <button class="btn btn-outline-success" name="response" type="submit" value="Accept">Accept</button>
+                                            <button class="btn btn-outline-danger" name="response" type="submit" value="Decline">Decline</button>
+                                        </form>
+                                        @elseif($activity->date < now()->format('Y-m-d'))
+                                        <span class="text-danger fw-bold">Expired</span>
+                                        @elseif($activity->has_accepted === true || $activity->has_accepted == true)
+                                        <span class="text-success fw-bold">Accepted</span>
+                                        @elseif($activity->has_accepted === false || $activity->has_accepted == false)
+                                        <span class="text-danger fw-bold">Declined</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         @endforeach
                     </div>
+                    
                 </div>
             </div>
         </div>

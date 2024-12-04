@@ -216,13 +216,19 @@
                                                                 <div class="card-body">
                                                                     <h5 class="card-title"><strong>{{ $experience['title'] }}</strong></h5>
                                                                     <p class="card-text">
-                                                                        <small>Location: {{ $experience['location'] }}</small><br>
-                                                                        <small>Organization: {{ $experience['organization'] }}</small><br>
+                                                                        <small>Location: {{ $experience['location'] ?? 'N/A' }}</small><br>
+                                                                        <small>Organization: {{ $experience['organization'] ?? 'N/A' }}</small><br>
+                                                                        
                                                                         <small>Dates:
-                                                                            @foreach($experience['dates'] as $date)
-                                                                            {{ $date }} @if(!$loop->last), @endif
-                                                                            @endforeach
+                                                                            @if(isset($experience['dates']) && is_array($experience['dates']))
+                                                                                @foreach($experience['dates'] as $date)
+                                                                                    {{ $date }} @if(!$loop->last), @endif
+                                                                                @endforeach
+                                                                            @else
+                                                                                N/A
+                                                                            @endif
                                                                         </small><br>
+                                                                        
                                                                         @if(isset($experience['date_start']) && isset($experience['date_end']))
                                                                         <small>Start Date: {{ $experience['date_start'] }}</small><br>
                                                                         <small>End Date: {{ $experience['date_end'] }}</small><br>
