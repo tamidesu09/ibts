@@ -79,9 +79,7 @@
                         <label class="form-label">Activity Type</label>
                         <select class="form-select @error('type') is-invalid @enderror" name="type">
                             <option value="" disabled selected>Select activity type</option>
-                            <option value="Call">Call</option>
-                            <option value="Meeting">Meeting</option>
-                            <option value="Email">Email</option>
+                            <option value="Message">Message</option>
                             <option value="Interview">Interview</option>
 
                         </select>

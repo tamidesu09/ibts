@@ -23,7 +23,7 @@ class ActivityStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'type' => 'required|in:Call,Meeting,Email,Interview',
+            'type' => 'required|in:Message,Interview',
             'date' => 'required|date',
             'hours_start' => 'required',
             'hours_end' => 'required',

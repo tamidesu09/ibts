@@ -83,7 +83,16 @@
                                                 Interview Schedule
                                             </a>
                                             <span class="step-item @if($application->status == 'Accepted') active @endif">
-                                                Onboarding
+                                                Accepted
+                                            </span>
+                                            <span class="step-item @if($application->status == 'Accepted' || $application->status == 'Rejected') active @endif">
+                                                @if($application->status == 'Accepted')
+                                                Accepted
+                                                @elseif($application->status == 'Rejected')
+                                                Rejected
+                                                @else
+                                                Accepted/Rejected
+                                                @endif
                                             </span>
                                         </div>
                                     </div>
@@ -109,6 +118,7 @@
                                     <th class="table-light">Date</th>
                                     <td>{{\Carbon\Carbon::parse($activity->date)->format('F d, Y')}}</td>
                                 </tr>
+                                @if($activity->type == 'Interview')
                                 <tr>
                                     <th class="table-light">Time</th>
                                     <td>{{$activity->hours_start}} - {{$activity->hours_end}}</td>
@@ -117,10 +127,12 @@
                                     <th class="table-light">Location</th>
                                     <td>{{$activity->location}}</td>
                                 </tr>
+                                @endif
                                 <tr>
                                     <th class="table-light">Description</th>
                                     <td>{!!$activity->description!!}</td>
                                 </tr>
+                                @if($activity->type == 'Interview')
                                 <tr>
                                     <th class="table-light">URL</th>
                                     <td>
@@ -129,6 +141,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                                 <tr>
                                     <th class="table-light">Actions</th>
                                     <td>
@@ -139,19 +152,19 @@
                                             <button class="btn btn-outline-danger" name="response" type="submit" value="Decline">Decline</button>
                                         </form>
                                         @elseif($activity->date < now()->format('Y-m-d'))
-                                        <span class="text-danger fw-bold">Expired</span>
-                                        @elseif($activity->has_accepted === true || $activity->has_accepted == true)
-                                        <span class="text-success fw-bold">Accepted</span>
-                                        @elseif($activity->has_accepted === false || $activity->has_accepted == false)
-                                        <span class="text-danger fw-bold">Declined</span>
-                                        @endif
+                                            <span class="text-danger fw-bold">Expired</span>
+                                            @elseif($activity->has_accepted === true || $activity->has_accepted == true)
+                                            <span class="text-success fw-bold">Accepted</span>
+                                            @elseif($activity->has_accepted === false || $activity->has_accepted == false)
+                                            <span class="text-danger fw-bold">Declined</span>
+                                            @endif
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         @endforeach
                     </div>
-                    
+
                 </div>
             </div>
         </div>

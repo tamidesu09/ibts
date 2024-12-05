@@ -497,8 +497,8 @@
                                     <option value="Interview Schedule" @selected(old('appstatus', $application->status) == 'Interview Schedule')>
                                         Interview Schedule
                                     </option>
-                                    <option value="Accepted" @selected(old('appstatus', $application->status) == 'Accepted')>
-                                        Accepted
+                                    <option value="Accepted" @selected(old('appstatus', $application->status) == 'Hired')>
+                                        Hired
                                     </option>
                                     <option value="Rejected" @selected(old('appstatus', $application->status) == 'Rejected')>
                                         Rejected
@@ -520,9 +520,16 @@
                                     <a href="#" class="step-item @if($application->status == 'Interview Schedule') active @endif">
                                         Interview Schedule
                                     </a>
-                                    <span class="step-item @if($application->status == 'Accepted') active @endif">
-                                        Onboarding
+                                    <span class="step-item @if($application->status == 'Accepted' || $application->status == 'Rejected') active @endif">
+                                        @if($application->status == 'Accepted')
+                                        Accepted
+                                        @elseif($application->status == 'Rejected')
+                                        Rejected
+                                        @else
+                                        Accepted/Rejected
+                                        @endif
                                     </span>
+
                                 </div>
                             </div>
 
