@@ -21,7 +21,7 @@ class ActivityFactory extends Factory
 
         return [
             'title' => fake()->sentence($nbWords = 1, $variableNbWords = true),
-            'type' => fake()->randomElement($array = array('Call', 'Meeting', 'Email', 'Interview')),
+            'type' => fake()->randomElement($array = array('Message', 'Interview')),
             'date' => now(),
             'date' => fake()->dateTimeBetween($startDate = '-3 years', $endDate = 'now', $timezone = null),
             'hours_start' => "07:00:00",

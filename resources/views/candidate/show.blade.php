@@ -477,6 +477,8 @@
                                 aria-label="Close"></button>
                         </div>
                         @endif
+
+                        @if($application->status != 'Closed')
                         <form action="{{route('candidates.updateStatus', $application->id)}}" method="POST">
                             @csrf
                             <div class="mb-3">
@@ -497,7 +499,7 @@
                                     <option value="Interview Schedule" @selected(old('appstatus', $application->status) == 'Interview Schedule')>
                                         Interview Schedule
                                     </option>
-                                    <option value="Accepted" @selected(old('appstatus', $application->status) == 'Hired')>
+                                    <option value="Hired" @selected(old('appstatus', $application->status) == 'Hired')>
                                         Hired
                                     </option>
                                     <option value="Rejected" @selected(old('appstatus', $application->status) == 'Rejected')>
@@ -520,8 +522,8 @@
                                     <a href="#" class="step-item @if($application->status == 'Interview Schedule') active @endif">
                                         Interview Schedule
                                     </a>
-                                    <span class="step-item @if($application->status == 'Accepted' || $application->status == 'Rejected') active @endif">
-                                        @if($application->status == 'Accepted')
+                                    <span class="step-item @if($application->status == 'Hired' || $application->status == 'Rejected') active @endif">
+                                        @if($application->status == 'Hired')
                                         Accepted
                                         @elseif($application->status == 'Rejected')
                                         Rejected
@@ -545,6 +547,10 @@
                             <button type="submit" class="btn btn-primary">Update</button>
 
                         </form>
+                        @else
+                        <h1>JOB POST IS CLOSED. SOMEONE HAS BEEN HIRED</h1>
+                        @endif
+
 
                         <div class="hr-text hr-text-right text-blue">Evaluation Test Section</div>
 

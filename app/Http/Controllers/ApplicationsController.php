@@ -109,15 +109,22 @@ class ApplicationsController extends Controller
 
     public function updateStatus(Request $request, $application_id)
     {
-        if (auth()->user()->user_type != 0) {
-            abort(404);
-        }
+
         $application = Applications::findOrFail($application_id);
 
+        if (auth()->user()->user_type != 0 || $application->status == 'Closed') {
+            abort(404);
+        }
+
         $request->validate([
-            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Accepted,Rejected',
+            'appstatus' => 'required|in:Application Received,Screen,Under Review,Interview Schedule,Hired,Rejected',
             'correct_answers' => 'required|numeric'
         ]);
+
+        if ($request->appstatus == 'Hired') {
+            Applications::where('job_id', $application->job_id)
+                ->update(['status' => 'Closed']);
+        }
 
         $application->status =  $request->appstatus;
         $application->correct_answers =  $request->correct_answers;

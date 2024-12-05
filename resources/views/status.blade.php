@@ -69,6 +69,8 @@
                                         </h4>
                                     </div>
                                     <div class=" col-sm-6">
+
+                                        @if($application->status != 'Closed')
                                         <div class="steps">
                                             <a href="#" class="step-item @if($application->status == 'Application Received') active @endif">
                                                 Application Received
@@ -95,6 +97,9 @@
                                                 @endif
                                             </span>
                                         </div>
+                                        @else
+                                        CLOSED ALREADY THANK YOU FOR APPLICATION ETC ETC ETC
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +147,7 @@
                                     </td>
                                 </tr>
                                 @endif
+                                @if($activity->type == 'Message')
                                 <tr>
                                     <th class="table-light">Actions</th>
                                     <td>
@@ -160,6 +166,7 @@
                                             @endif
                                     </td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                         @endforeach
