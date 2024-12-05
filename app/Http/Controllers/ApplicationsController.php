@@ -70,7 +70,7 @@ class ApplicationsController extends Controller
                 ]);
 
                 return back()
-                    ->with('success', 'Application submitted successfully.');
+                    ->with('success', 'Application submitted successfully. Please check your Application Status from time to time for updates, or expect a response within 2-3 business days.');
             } else {
                 return back()->withErrors(['cv' => 'CV is required']);
             }
@@ -186,7 +186,7 @@ class ApplicationsController extends Controller
 
         $job = Job::findOrFail($job_id);
 
-        $questions = json_decode($job->questions); 
+        $questions = json_decode($job->questions);
 
         return view('evaluation', compact('job', 'application_id', 'application', 'questions'));
     }

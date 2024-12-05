@@ -56,7 +56,7 @@
 
 @if (session('success'))
 <div class="alert alert-success alert-dismissible fade show position-absolute"
-    style="top: 1rem; right: 1rem; z-index: 1050;" role="alert">
+    style="top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1050;" role="alert">
     <div class="d-flex">
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
